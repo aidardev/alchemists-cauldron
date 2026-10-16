@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import unicorn from 'eslint-plugin-unicorn';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
@@ -13,6 +14,7 @@ export default defineConfig({
         js.configs.recommended,
         tseslint.configs.recommended,
         unicorn.configs.recommended,
+        eslintConfigPrettier,
     ],
 
     languageOptions: {
