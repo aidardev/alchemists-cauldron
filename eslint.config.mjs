@@ -5,34 +5,42 @@ import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default defineConfig({
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**'],
+export default defineConfig(
+    {
+        ignores: ['dist/**', 'node_modules/**', 'coverage/**'],
 
-    files: ['**/*.ts'],
+        files: ['**/*.ts'],
 
-    extends: [
-        js.configs.recommended,
-        tseslint.configs.recommended,
-        unicorn.configs.recommended,
-        eslintConfigPrettier,
-    ],
+        extends: [
+            js.configs.recommended,
+            tseslint.configs.recommended,
+            unicorn.configs.recommended,
+            eslintConfigPrettier,
+        ],
 
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+        },
+
+        linterOptions: {
+            noInlineConfig: true,
+            reportUnusedDisableDirectives: 'error',
+        },
+
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'error',
+            'no-console': 'error',
+
+            'unicorn/prevent-abbreviations': 'off',
         },
     },
-
-    linterOptions: {
-        noInlineConfig: true,
-        reportUnusedDisableDirectives: 'error',
+    {
+        files: ['vite.config.ts'],
+        rules: {
+            'unicorn/no-top-level-side-effects': 'off',
+        },
     },
-
-    rules: {
-        '@typescript-eslint/no-explicit-any': 'error',
-        'no-console': 'error',
-
-        'unicorn/prevent-abbreviations': 'off',
-    },
-});
+);
