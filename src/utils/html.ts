@@ -23,9 +23,9 @@ function escapeHtml(text: string): string {
 function stringify(value: TemplateValue): string {
     if (value instanceof SafeHtml) return value.value;
     if (Array.isArray(value)) return value.map(stringify).join('');
-    if (value === null || ([undefined, false] as unknown[]).includes(value)) return '';
-
-    return escapeHtml(String(value));
+    return value === null || ([undefined, false] as unknown[]).includes(value)
+        ? ''
+        : escapeHtml(String(value));
 }
 
 export function html(strings: TemplateStringsArray, ...values: TemplateValue[]): SafeHtml {
