@@ -1,0 +1,59 @@
+// Liquid colour per ingredient. Keys must match `Ingredient.id`.
+$liquid-colors: (
+    'dragon-tears': #4fd1c5,
+    'fairy-dust': #b07cff,
+    'frost-lotus': #8fd3ff,
+    'mandrake-root': #c79a5a,
+    'caustic-acid': #b6e03c,
+    'essence-of-the-void': #7a55e0,
+    'phoenix-feather': #ff8a3d,
+    'toad-slime': #7fae4a,
+);
+
+.ingredient-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    inline-size: var(--icon-size, var(--size-6));
+    block-size: var(--icon-size, var(--size-6));
+    color: var(--color-alchemy);
+    filter: drop-shadow(0 0 var(--size-1) color-mix(in srgb, currentcolor 45%, transparent));
+
+    svg {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+}
+
+.ingredient-icon__glass {
+    fill: rgb(255 255 255 / 7%);
+    stroke: var(--color-text-muted);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+.ingredient-icon__liquid {
+    fill: currentcolor;
+    opacity: 0.85;
+}
+
+.ingredient-icon__cork {
+    fill: var(--color-border);
+}
+
+.ingredient-icon__shine {
+    fill: none;
+    stroke: rgb(255 255 255 / 55%);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+
+@each $id, $color in $liquid-colors {
+    .ingredient-icon[data-ingredient='#{$id}'] {
+        color: $color;
+    }
+}
+
+.ingredient-icon[hidden] {
+    display: none;
+}

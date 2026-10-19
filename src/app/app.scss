@@ -1,0 +1,44 @@
+@use '../styles/index' as styles;
+
+.app {
+    display: grid;
+    grid-template-areas:
+        'header'
+        'cauldron'
+        'shelf'
+        'actions';
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--size-3);
+    inline-size: min(100%, var(--container-width));
+    min-block-size: 100dvh;
+    margin-inline: auto;
+    overflow: hidden;
+    padding: var(--size-2) var(--container-padding-x) var(--size-4);
+
+    > .header {
+        grid-area: header;
+    }
+
+    > .shelf {
+        grid-area: shelf;
+        align-self: start;
+    }
+
+    > .cauldron {
+        grid-area: cauldron;
+    }
+
+    > .action-bar {
+        grid-area: actions;
+    }
+
+    @include styles.min-width(styles.$br-lg) {
+        grid-template-areas:
+            'header header'
+            'shelf cauldron'
+            'actions actions';
+        grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr);
+        grid-template-rows: auto 1fr auto;
+        gap: var(--size-4);
+    }
+}

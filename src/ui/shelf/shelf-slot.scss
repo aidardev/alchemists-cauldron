@@ -1,0 +1,106 @@
+.shelf-slot {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        'icon name stock'
+        'icon stats stock';
+    gap: var(--size-05) var(--size-2);
+    align-items: center;
+    inline-size: 100%;
+    padding: var(--size-1) var(--size-2);
+    color: var(--color-text);
+    text-align: start;
+    cursor: pointer;
+    background: transparent;
+    border: var(--border-width-thin) solid transparent;
+    border-radius: var(--corner-small);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        opacity var(--transition-base);
+
+    &:hover:not(:disabled) {
+        background: var(--color-surface-raised);
+        border-color: var(--color-border);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(1px);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+    }
+
+    &--empty:disabled {
+        opacity: 0.35;
+    }
+}
+
+.shelf-slot__icon {
+    grid-area: icon;
+    display: grid;
+    inline-size: var(--size-6);
+    block-size: var(--size-6);
+}
+
+.shelf-slot__name {
+    grid-area: name;
+    font-family: var(--font-family-display);
+    font-size: var(--fs-body);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+}
+
+.shelf-slot__stats {
+    grid-area: stats;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-05);
+}
+
+.shelf-slot__stat {
+    --stat-color: var(--color-text-muted);
+
+    display: inline-flex;
+    gap: var(--size-05);
+    padding: 0 var(--size-1);
+    font-size: var(--fs-caption);
+    font-variant-numeric: tabular-nums;
+    color: var(--stat-color);
+    background: color-mix(in srgb, var(--stat-color) 12%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--stat-color) 50%, transparent);
+    border-radius: var(--corner-small);
+
+    &--temperature {
+        --stat-color: var(--color-temperature);
+    }
+
+    &--density {
+        --stat-color: var(--color-density);
+    }
+
+    &--magic {
+        --stat-color: var(--color-magic);
+    }
+}
+
+.shelf-slot__stat-label {
+    font-weight: 700;
+}
+
+.shelf-slot__stock {
+    grid-area: stock;
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-4);
+    block-size: var(--size-4);
+    font-size: var(--fs-body-sm);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-alchemy);
+    background: var(--color-bg);
+    border: var(--border-width-medium) solid var(--color-gold);
+    border-radius: 50%;
+}
