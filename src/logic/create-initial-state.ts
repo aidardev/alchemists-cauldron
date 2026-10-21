@@ -6,5 +6,9 @@ export function createInitialState(): GameState {
         shelfStock: {},
         cauldronIngredientIds: [],
         activeRecipe: undefined,
+        score: 0,
+        timeLeft: 0,
+        lives: 0,
+        lastBrew: undefined,
     };
 }
