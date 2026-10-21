@@ -1,3 +1,5 @@
+@use '../../styles/index' as styles;
+
 .shelf-slot {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -36,6 +38,12 @@
     &--empty:disabled {
         opacity: 0.35;
     }
+
+    @include styles.max-width(styles.$br-sm) {
+        grid-template-areas:
+            'icon name stock'
+            'icon stats stats';
+    }
 }
 
 .shelf-slot__icon {
@@ -64,6 +72,7 @@
     --stat-color: var(--color-text-muted);
 
     display: inline-flex;
+    flex-shrink: 0;
     gap: var(--size-05);
     padding: 0 var(--size-1);
     font-size: var(--fs-caption);

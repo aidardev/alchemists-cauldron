@@ -42,7 +42,7 @@
 .recipe-panel__eyebrow {
     margin: 0 0 var(--size-1);
     font-family: var(--font-family-display);
-    font-size: var(--fs-caption);
+    font-size: var(--fs-body);
     font-weight: 700;
     text-align: center;
     letter-spacing: 0.12em;
@@ -84,6 +84,7 @@
     justify-content: space-between;
     padding: var(--size-1) var(--size-1-5);
     font-family: var(--font-family-display);
+    font-size: var(--fs-body-lg);
     font-weight: 600;
     background: color-mix(in srgb, var(--recipe-ink) 5%, transparent);
     border: var(--border-width-thin) solid color-mix(in srgb, var(--recipe-ink) 30%, transparent);
@@ -99,14 +100,14 @@
 }
 
 .recipe-panel__count {
-    font-size: var(--fs-heading-sm);
+    font-size: var(--fs-heading-md);
     font-variant-numeric: tabular-nums;
 }
 
 .recipe-panel__hint,
 .recipe-panel__tolerance {
     margin: var(--size-1) 0 0;
-    font-size: var(--fs-caption);
+    font-size: var(--fs-body);
     text-align: center;
 }
 
@@ -137,14 +138,14 @@
 
     dt {
         font-family: var(--font-family-display);
-        font-size: var(--fs-body-sm);
+        font-size: var(--fs-body);
         font-weight: 600;
     }
 
     dd {
         margin: 0;
         padding: var(--size-05) var(--size-1);
-        font-size: var(--fs-body-sm);
+        font-size: var(--fs-body-lg);
         font-weight: 700;
         color: var(--range-color);
         font-variant-numeric: tabular-nums;
@@ -160,7 +161,7 @@
 .recipe-panel__feedback {
     margin: var(--size-1-5) 0 0;
     padding-inline-start: var(--size-1);
-    font-size: var(--fs-body-sm);
+    font-size: var(--fs-body);
     border-inline-start: var(--border-width-thick) solid currentColor;
 
     &:empty {
