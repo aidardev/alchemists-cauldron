@@ -160,7 +160,7 @@
 
 .recipe-panel__feedback {
     margin: var(--size-1-5) 0 0;
-    padding-inline-start: var(--size-1);
+    padding-inline-start: var(--size-1) var(--size-2);
     font-size: var(--fs-body);
     border-inline-start: var(--border-width-thick) solid currentColor;
 
@@ -170,7 +170,7 @@
 
     .recipe-panel--success &,
     .recipe-panel--failure & {
-        padding: var(--size-1);
+        padding: var(--size-1) var(--size-2);
         background: var(--recipe-ink);
         border-radius: var(--corner-small);
     }
