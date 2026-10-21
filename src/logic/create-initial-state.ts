@@ -5,5 +5,6 @@ export function createInitialState(): GameState {
         status: 'menu',
         shelfStock: {},
         cauldronIngredientIds: [],
+        activeRecipe: undefined,
     };
 }

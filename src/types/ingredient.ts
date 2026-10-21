@@ -1,7 +1,6 @@
-export interface Ingredient {
+import type { CauldronParameters } from './parameters';
+
+export interface Ingredient extends CauldronParameters {
     readonly id: string;
     readonly name: string;
-    readonly temperature: number;
-    readonly density: number;
-    readonly magicPower: number;
 }

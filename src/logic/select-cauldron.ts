@@ -1,3 +1,4 @@
+import { LEVEL_ONE_RULES } from '@/data/game-rules';
 import type { GameState } from '@/types/game';
 import type { Ingredient } from '@/types/ingredient';
 import type { CauldronView } from '@/types/view';
@@ -12,5 +13,5 @@ export function selectCauldron(state: GameState, catalog: readonly Ingredient[])
         if (ingredient) ingredients.push(ingredient);
     }
 
-    return { ingredients, capacity: 4 };
+    return { ingredients, capacity: LEVEL_ONE_RULES.cauldronCapacity };
 }

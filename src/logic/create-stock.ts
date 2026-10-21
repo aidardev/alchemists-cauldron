@@ -9,7 +9,7 @@ export function createStock(
     ingredients: readonly Ingredient[],
     random: () => number = Math.random,
 ): ShelfStock {
-    const stock: ShelfStock = {};
+    const stock: Record<string, number> = {};
 
     for (const ingredient of ingredients) {
         stock[ingredient.id] = Math.floor(random() * (MAX_STOCK - MIN_STOCK + 1)) + MIN_STOCK;
