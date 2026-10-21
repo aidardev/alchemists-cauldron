@@ -5,6 +5,7 @@
     grid-template-areas:
         'header'
         'cauldron'
+        'parameters'
         'shelf'
         'actions';
     grid-template-columns: minmax(0, 1fr);
@@ -12,7 +13,7 @@
     inline-size: min(100%, var(--container-width));
     min-block-size: 100dvh;
     margin-inline: auto;
-    overflow: hidden;
+    overflow-x: clip;
     padding: var(--size-2) var(--container-padding-x) var(--size-4);
 
     > .header {
@@ -32,13 +33,19 @@
         grid-area: actions;
     }
 
+    > .parameter-bars {
+        grid-area: parameters;
+        align-self: end;
+    }
+
     @include styles.min-width(styles.$br-lg) {
         grid-template-areas:
             'header header'
             'shelf cauldron'
+            'parameters parameters'
             'actions actions';
         grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr);
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: auto 1fr auto auto;
         gap: var(--size-4);
     }
 }
