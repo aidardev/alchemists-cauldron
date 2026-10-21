@@ -1,3 +1,4 @@
+import { brewPotion } from '@/logic/brew-potion';
 import { createInitialState } from '@/logic/create-initial-state';
 import { startGame } from '@/logic/start-game';
 import { addIngredient } from '../logic/add-ingredient';
@@ -46,5 +47,9 @@ export class GameStore {
 
     public addIngredient(id: string): void {
         this.setState(addIngredient(this.state, id));
+    }
+
+    public brew(): void {
+        this.setState(brewPotion(this.state, undefined, this.random));
     }
 }
