@@ -36,3 +36,32 @@
         transform: translate(-50%, -50%) rotate(45deg);
     }
 }
+
+.header__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--size-1);
+    inline-size: min(100%, 28rem);
+    margin: var(--size-1) 0 0;
+
+    > div {
+        padding: var(--size-05) var(--size-1);
+        text-align: center;
+        background: var(--color-surface);
+        border: var(--border-width-thin) solid var(--color-border);
+        border-radius: var(--corner-small);
+    }
+
+    dt {
+        font-family: var(--font-family-display);
+        font-size: var(--fs-caption);
+        color: var(--color-gold);
+    }
+
+    dd {
+        margin: 0;
+        font-size: var(--fs-body-lg);
+        color: var(--color-alchemy);
+        font-variant-numeric: tabular-nums;
+    }
+}
