@@ -1,3 +1,4 @@
+import { LEVEL_ONE_RULES } from '@/data/game-rules';
 import { INGREDIENTS } from '@/data/ingredients';
 import type { GameState } from '@/types/game';
 import type { Ingredient } from '@/types/ingredient';
@@ -9,7 +10,7 @@ export function startGame(
 ): GameState {
     return {
         status: 'playing',
-        shelfStock: createStock(catalog.slice(0, 6), random),
+        shelfStock: createStock(catalog.slice(0, LEVEL_ONE_RULES.shelfSize), random),
         cauldronIngredientIds: [],
     };
 }
