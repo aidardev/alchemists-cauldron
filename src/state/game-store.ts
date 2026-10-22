@@ -1,5 +1,6 @@
 import { brewPotion } from '@/logic/brew-potion';
 import { createInitialState } from '@/logic/create-initial-state';
+import { updateGameTime } from '@/logic/game-time';
 import { startGame } from '@/logic/start-game';
 import { addIngredient } from '../logic/add-ingredient';
 import type { GameState } from '../types/game';
@@ -12,9 +13,11 @@ export class GameStore {
     private readonly listeners = new Set<GameListener>();
 
     private readonly random: () => number;
+    private readonly now: () => number;
 
-    constructor(random: () => number = Math.random) {
+    constructor(random: () => number = Math.random, now: () => number = Date.now) {
         this.random = random;
+        this.now = now;
     }
 
     private setState(nextState: GameState): void {
@@ -42,14 +45,19 @@ export class GameStore {
     }
 
     public startGame(): void {
-        this.setState(startGame(undefined, this.random));
+        this.setState(startGame(undefined, this.random, this.now()));
     }
 
     public addIngredient(id: string): void {
-        this.setState(addIngredient(this.state, id));
+        const current = updateGameTime(this.state, this.now());
+        this.setState(addIngredient(current, id));
     }
 
     public brew(): void {
-        this.setState(brewPotion(this.state, undefined, this.random));
+        this.setState(brewPotion(this.state, undefined, this.random, this.now()));
+    }
+
+    public tick(): void {
+        this.setState(updateGameTime(this.state, this.now()));
     }
 }
