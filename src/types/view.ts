@@ -1,4 +1,4 @@
-import type { BrewOutcome } from './game';
+import type { BrewOutcome, GameOverReason } from './game';
 import type { Ingredient } from './ingredient';
 import type { ParameterKey, ParameterRange } from './parameters';
 import type { Recipe } from './recipe';
@@ -53,4 +53,12 @@ export interface HeaderView {
     readonly score: number;
     readonly timeLeft: number;
     readonly lives: number;
+    readonly timeProgress: number;
+    readonly isTimeCritical: boolean;
+}
+
+export interface GameOverView {
+    readonly isVisible: boolean;
+    readonly score: number;
+    readonly reason: GameOverReason | undefined;
 }
