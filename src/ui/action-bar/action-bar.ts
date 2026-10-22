@@ -7,17 +7,28 @@ interface ActionBarOptions {
     readonly onStart: () => void;
     readonly onBrew: () => void;
     readonly onPause: () => void;
+    readonly onLeaderboard: () => void;
 }
 
 export class ActionBar extends BaseComponent<'div'> {
     private readonly startButton: HTMLButtonElement;
     private readonly brewButton: HTMLButtonElement;
     private readonly pauseButton: HTMLButtonElement;
+    private readonly leaderboardButton: HTMLButtonElement;
 
-    constructor({ onStart, onBrew, onPause }: ActionBarOptions) {
+    constructor({ onStart, onBrew, onPause, onLeaderboard }: ActionBarOptions) {
         super('div', 'action-bar');
 
         this.setHtml(html`
+            <button
+                type="button"
+                class="action-bar__button action-bar__button--secondary"
+                data-action="leaderboard"
+                aria-haspopup="dialog"
+                aria-controls="leaderboard-dialog"
+            >
+                Leaderboard
+            </button>
             <button type="button" class="action-bar__button" data-action="start">Start game</button>
             <button type="button" class="action-bar__button" data-action="brew" disabled>
                 Brew
@@ -40,6 +51,10 @@ export class ActionBar extends BaseComponent<'div'> {
         this.startButton = this.getElement('[data-action="start"]');
         this.brewButton = this.getElement('[data-action="brew"]');
         this.pauseButton = this.getElement('[data-action="pause"]');
+        this.leaderboardButton = this.getElement('[data-action="leaderboard"]');
+        this.leaderboardButton.addEventListener('click', onLeaderboard, {
+            signal: this.eventSignal,
+        });
 
         this.startButton.addEventListener('click', onStart, { signal: this.eventSignal });
         this.brewButton.addEventListener('click', onBrew, { signal: this.eventSignal });
@@ -52,5 +67,6 @@ export class ActionBar extends BaseComponent<'div'> {
         this.brewButton.hidden = showStart;
         this.brewButton.disabled = !canBrew;
         this.pauseButton.hidden = !canPause;
+        this.leaderboardButton.hidden = !showStart;
     }
 }
