@@ -8,6 +8,7 @@ import { pickRecipe } from './pick-recipe';
 export function startGame(
     catalog: readonly Ingredient[] = INGREDIENTS,
     random: () => number = Math.random,
+    now: number = Date.now(),
 ): GameState {
     return {
         status: 'playing',
@@ -16,6 +17,8 @@ export function startGame(
         activeRecipe: pickRecipe(LEVEL_ONE_RULES.difficulty, random),
         score: 0,
         timeLeft: LEVEL_ONE_RULES.startingTime,
+        endTime: now + LEVEL_ONE_RULES.startingTime * 1000,
+        gameOverReason: undefined,
         lives: LEVEL_ONE_RULES.startingLives,
         lastBrew: undefined,
     };

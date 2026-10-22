@@ -6,6 +6,8 @@ export function canAddIngredient(state: GameState, id: string): boolean {
 
     return (
         state.status === 'playing' &&
+        state.timeLeft > 0 &&
+        state.lives > 0 &&
         stock > 0 &&
         state.cauldronIngredientIds.length < LEVEL_ONE_RULES.cauldronCapacity
     );

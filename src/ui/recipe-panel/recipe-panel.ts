@@ -95,8 +95,6 @@ export class RecipePanel extends BaseComponent<'section'> {
         }
 
         const message = lastBrew ? BREW_MESSAGES[lastBrew] : '';
-        this.feedback.textContent = isGameOver
-            ? 'No lives left. Play again to start a new game.'
-            : message;
+        this.feedback.textContent = isGameOver ? '' : message;
     }
 }
