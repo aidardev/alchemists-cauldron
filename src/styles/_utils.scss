@@ -1,0 +1,33 @@
+@layer utils {
+    .sr-only {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: var(--size-px);
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: var(--size-px);
+    }
+
+    .container {
+        max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+        padding-inline: var(--container-padding-x);
+        margin-inline: auto;
+    }
+
+    .list-unstyled {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .is-locked {
+        overflow: hidden;
+    }
+}

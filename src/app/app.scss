@@ -1,0 +1,8 @@
+.app {
+    display: grid;
+    inline-size: min(100%, var(--container-width));
+    min-block-size: 100dvh;
+    margin-inline: auto;
+    overflow-x: clip;
+    padding: var(--size-2) var(--container-padding-x) var(--size-4);
+}

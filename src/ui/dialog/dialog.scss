@@ -1,0 +1,251 @@
+@use '../../styles/index' as styles;
+
+.dialog {
+    inline-size: min(var(--dialog-width, 30rem), calc(100% - var(--size-4)));
+    max-inline-size: none;
+    max-block-size: calc(100dvh - var(--size-4));
+    margin: auto;
+    padding: 0;
+    overflow-y: auto;
+    color: var(--color-text);
+    background:
+        radial-gradient(
+            ellipse at 50% 0,
+            color-mix(in srgb, var(--color-alchemy) 12%, transparent),
+            transparent 70%
+        ),
+        var(--color-surface);
+    border: var(--border-width-medium) solid var(--color-gold);
+    border-radius: var(--corner-large);
+    box-shadow: 0 var(--size-2) var(--size-8) var(--color-bg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+    opacity: 0;
+    transform: translateY(var(--size-1-5)) scale(0.98);
+    transition:
+        opacity var(--transition-base),
+        transform var(--transition-base),
+        overlay var(--transition-base) allow-discrete,
+        display var(--transition-base) allow-discrete;
+
+    &[open] {
+        opacity: 1;
+        transform: none;
+    }
+
+    &::backdrop {
+        background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+        backdrop-filter: blur(var(--size-05));
+        opacity: 0;
+        transition:
+            opacity var(--transition-base),
+            overlay var(--transition-base) allow-discrete,
+            display var(--transition-base) allow-discrete;
+    }
+
+    &[open]::backdrop {
+        opacity: 1;
+    }
+
+    &--centered {
+        text-align: center;
+    }
+}
+
+.dialog__content {
+    padding: var(--size-3);
+
+    @include styles.min-width(styles.$br-sm) {
+        padding: var(--size-4);
+    }
+}
+
+.dialog__title {
+    margin: 0;
+    font-family: var(--font-family-display);
+    font-size: var(--fs-heading-lg);
+    color: var(--color-gold-light);
+}
+
+.dialog__emblem {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-8);
+    block-size: var(--size-8);
+    margin: 0 auto var(--size-2);
+    color: var(--color-alchemy);
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--color-alchemy) 12%, var(--color-bg)),
+        var(--color-bg)
+    );
+    border: var(--border-width-thin) solid var(--color-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 var(--size-3) color-mix(in srgb, var(--color-alchemy) 10%, transparent);
+
+    svg {
+        inline-size: var(--size-4);
+        block-size: var(--size-4);
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.dialog__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+    margin: var(--size-3) 0;
+    padding: var(--size-2);
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-medium);
+
+    > div {
+        flex: 1;
+        min-inline-size: 0;
+    }
+
+    dt {
+        font-family: var(--font-family-display);
+        font-size: var(--fs-body);
+        color: var(--color-gold);
+    }
+
+    dd {
+        margin: var(--size-05) 0 0;
+        font-size: var(--fs-heading-md);
+        font-weight: 700;
+        line-height: var(--lh-tight);
+        color: var(--color-alchemy);
+        overflow-wrap: anywhere;
+        font-variant-numeric: tabular-nums;
+    }
+
+    &--featured dd {
+        font-size: var(--fs-display);
+    }
+}
+
+.dialog__description {
+    margin: var(--size-1) 0 0;
+    font-size: var(--fs-body-lg);
+    color: var(--color-text-muted);
+}
+
+.dialog__actions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: var(--size-1-5);
+    margin-block-start: var(--size-3);
+
+    @include styles.min-width(styles.$br-sm) {
+        flex-direction: row;
+    }
+}
+
+.dialog__button {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: var(--size-6);
+    padding: var(--size-1-5) var(--size-2);
+    font-family: var(--font-family-display);
+    font-size: var(--fs-heading-sm);
+    font-weight: 700;
+    color: var(--color-on-parchment);
+    cursor: pointer;
+    background: var(--color-gold-light);
+    border: var(--border-width-medium) solid var(--color-gold);
+    border-radius: var(--corner-small);
+    transition: background-color var(--transition-fast);
+
+    @include styles.hover {
+        background: var(--color-gold);
+    }
+
+    &--secondary {
+        color: var(--color-text-muted);
+        background: transparent;
+        border-color: var(--color-border);
+
+        @include styles.hover {
+            color: var(--color-text);
+            background: var(--color-surface-raised);
+        }
+    }
+
+    &--danger {
+        color: var(--color-danger);
+        background: transparent;
+        border-color: var(--color-danger);
+
+        @include styles.hover {
+            background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface));
+        }
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+.dialog__form {
+    text-align: start;
+
+    > button {
+        inline-size: 100%;
+    }
+}
+
+.dialog__input {
+    inline-size: 100%;
+    min-block-size: var(--size-6);
+    margin-block-start: var(--size-1);
+    padding: var(--size-1-5);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-small);
+
+    &[aria-invalid='true'] {
+        border-color: var(--color-danger);
+    }
+}
+
+.dialog__hint {
+    margin-block: var(--size-1) var(--size-2);
+    font-size: var(--fs-body-sm);
+    color: var(--color-text-muted);
+}
+
+@starting-style {
+    .dialog[open] {
+        opacity: 0;
+        transform: translateY(var(--size-1-5)) scale(0.98);
+    }
+
+    .dialog[open]::backdrop {
+        opacity: 0;
+    }
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+body:has(.dialog[open]) {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dialog,
+    .dialog::backdrop,
+    .dialog__button {
+        transition: none;
+    }
+}
