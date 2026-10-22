@@ -1,0 +1,124 @@
+@use '../../styles/index' as styles;
+
+.dialog {
+    inline-size: min(var(--dialog-width, 30rem), calc(100% - var(--size-4)));
+    max-inline-size: none;
+    max-block-size: calc(100dvh - var(--size-4));
+    margin: auto;
+    padding: 0;
+    overflow-y: auto;
+    color: var(--color-text);
+    background:
+        radial-gradient(
+            ellipse at 50% 0,
+            color-mix(in srgb, var(--color-alchemy) 12%, transparent),
+            transparent 70%
+        ),
+        var(--color-surface);
+    border: var(--border-width-medium) solid var(--color-gold);
+    border-radius: var(--corner-large);
+    box-shadow: 0 var(--size-2) var(--size-8) var(--color-bg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+    opacity: 0;
+    transform: translateY(var(--size-1-5)) scale(0.98);
+    transition:
+        opacity var(--transition-base),
+        transform var(--transition-base),
+        overlay var(--transition-base) allow-discrete,
+        display var(--transition-base) allow-discrete;
+
+    &[open] {
+        opacity: 1;
+        transform: none;
+    }
+
+    &::backdrop {
+        background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+        backdrop-filter: blur(var(--size-05));
+        opacity: 0;
+        transition:
+            opacity var(--transition-base),
+            overlay var(--transition-base) allow-discrete,
+            display var(--transition-base) allow-discrete;
+    }
+
+    &[open]::backdrop {
+        opacity: 1;
+    }
+}
+
+.dialog__content {
+    padding: var(--size-3);
+
+    @include styles.min-width(styles.$br-sm) {
+        padding: var(--size-4);
+    }
+}
+
+.dialog__title {
+    margin: 0;
+    font-family: var(--font-family-display);
+    font-size: var(--fs-heading-lg);
+    color: var(--color-gold-light);
+}
+
+.dialog__description {
+    margin: var(--size-1) 0 0;
+    font-size: var(--fs-body-lg);
+    color: var(--color-text-muted);
+}
+
+.dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-1-5);
+    margin-block-start: var(--size-3);
+}
+
+.dialog__button {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: var(--size-6);
+    padding: var(--size-1-5) var(--size-2);
+    font-family: var(--font-family-display);
+    font-size: var(--fs-heading-sm);
+    font-weight: 700;
+    color: var(--color-on-parchment);
+    cursor: pointer;
+    background: var(--color-gold-light);
+    border: var(--border-width-medium) solid var(--color-gold);
+    border-radius: var(--corner-small);
+    transition: background-color var(--transition-fast);
+
+    @include styles.hover {
+        background: var(--color-gold);
+    }
+}
+
+@starting-style {
+    .dialog[open] {
+        opacity: 0;
+        transform: translateY(var(--size-1-5)) scale(0.98);
+    }
+
+    .dialog[open]::backdrop {
+        opacity: 0;
+    }
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+body:has(.dialog[open]) {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dialog,
+    .dialog::backdrop,
+    .dialog__button {
+        transition: none;
+    }
+}
