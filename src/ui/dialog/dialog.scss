@@ -46,6 +46,10 @@
     &[open]::backdrop {
         opacity: 1;
     }
+
+    &--centered {
+        text-align: center;
+    }
 }
 
 .dialog__content {
@@ -63,6 +67,69 @@
     color: var(--color-gold-light);
 }
 
+.dialog__emblem {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-8);
+    block-size: var(--size-8);
+    margin: 0 auto var(--size-2);
+    color: var(--color-alchemy);
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--color-alchemy) 12%, var(--color-bg)),
+        var(--color-bg)
+    );
+    border: var(--border-width-thin) solid var(--color-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 var(--size-3) color-mix(in srgb, var(--color-alchemy) 10%, transparent);
+
+    svg {
+        inline-size: var(--size-4);
+        block-size: var(--size-4);
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.dialog__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+    margin: var(--size-3) 0;
+    padding: var(--size-2);
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-medium);
+
+    > div {
+        flex: 1;
+        min-inline-size: 0;
+    }
+
+    dt {
+        font-family: var(--font-family-display);
+        font-size: var(--fs-body);
+        color: var(--color-gold);
+    }
+
+    dd {
+        margin: var(--size-05) 0 0;
+        font-size: var(--fs-heading-md);
+        font-weight: 700;
+        line-height: var(--lh-tight);
+        color: var(--color-alchemy);
+        overflow-wrap: anywhere;
+        font-variant-numeric: tabular-nums;
+    }
+
+    &--featured dd {
+        font-size: var(--fs-display);
+    }
+}
+
 .dialog__description {
     margin: var(--size-1) 0 0;
     font-size: var(--fs-body-lg);
@@ -71,9 +138,14 @@
 
 .dialog__actions {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: var(--size-1-5);
     margin-block-start: var(--size-3);
+
+    @include styles.min-width(styles.$br-sm) {
+        flex-direction: row;
+    }
 }
 
 .dialog__button {
@@ -93,6 +165,17 @@
 
     @include styles.hover {
         background: var(--color-gold);
+    }
+
+    &--secondary {
+        color: var(--color-text-muted);
+        background: transparent;
+        border-color: var(--color-border);
+
+        @include styles.hover {
+            color: var(--color-text);
+            background: var(--color-surface-raised);
+        }
     }
 }
 
