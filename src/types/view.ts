@@ -62,3 +62,13 @@ export interface GameOverView {
     readonly score: number;
     readonly reason: GameOverReason | undefined;
 }
+
+export interface PauseDialogView {
+    readonly isVisible: boolean;
+    readonly score: number;
+    readonly timeLeft: number;
+}
+
+export interface PlayFieldView {
+    readonly isPaused: boolean;
+}
