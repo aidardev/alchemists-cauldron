@@ -1,6 +1,9 @@
 import { brewPotion } from '@/logic/brew-potion';
 import { createInitialState } from '@/logic/create-initial-state';
+import { exitToMenu } from '@/logic/exit-to-menu';
 import { updateGameTime } from '@/logic/game-time';
+import { pauseGame } from '@/logic/pause-game';
+import { resumeGame } from '@/logic/resume-game';
 import { startGame } from '@/logic/start-game';
 import { addIngredient } from '../logic/add-ingredient';
 import type { GameState } from '../types/game';
@@ -59,5 +62,17 @@ export class GameStore {
 
     public tick(): void {
         this.setState(updateGameTime(this.state, this.now()));
+    }
+
+    public pause(): void {
+        this.setState(pauseGame(this.state, this.now()));
+    }
+
+    public resume(): void {
+        this.setState(resumeGame(this.state, this.now()));
+    }
+
+    public exitToMenu(): void {
+        this.setState(exitToMenu(this.state));
     }
 }

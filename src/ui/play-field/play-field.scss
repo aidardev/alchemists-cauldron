@@ -1,0 +1,68 @@
+@use '../../styles/index' as styles;
+
+.play-field {
+    display: grid;
+    grid-template-areas:
+        'header'
+        'recipe'
+        'cauldron'
+        'parameters'
+        'shelf'
+        'actions';
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--size-3);
+    min-inline-size: 0;
+
+    > .header {
+        grid-area: header;
+    }
+    > .shelf {
+        grid-area: shelf;
+        align-self: start;
+    }
+    > .cauldron {
+        grid-area: cauldron;
+    }
+    > .action-bar {
+        grid-area: actions;
+    }
+    > .parameter-bars {
+        grid-area: parameters;
+        align-self: end;
+    }
+    > .recipe-panel {
+        grid-area: recipe;
+        align-self: center;
+    }
+
+    &--paused {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    &--paused * {
+        animation-play-state: paused;
+    }
+
+    @include styles.min-width(styles.$br-lg) {
+        grid-template-areas:
+            'header header'
+            'shelf cauldron'
+            'shelf recipe'
+            'parameters parameters'
+            'actions actions';
+        grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr auto auto;
+        gap: var(--size-4);
+    }
+
+    @include styles.min-width(styles.$br-xl) {
+        grid-template-areas:
+            'header header header'
+            'shelf cauldron recipe'
+            'parameters parameters parameters'
+            'actions actions actions';
+        grid-template-columns: 24rem minmax(0, 1fr) minmax(22rem, 24rem);
+        grid-template-rows: auto 1fr auto auto;
+    }
+}

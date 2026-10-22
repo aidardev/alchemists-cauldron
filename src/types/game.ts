@@ -16,6 +16,7 @@ export interface GameState {
     readonly score: number;
     readonly timeLeft: number;
     readonly endTime: number | undefined;
+    readonly pausedAt: number | undefined;
     readonly gameOverReason: GameOverReason | undefined;
     readonly lives: number;
     readonly lastBrew: BrewOutcome | undefined;

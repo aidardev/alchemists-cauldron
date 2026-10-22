@@ -7,5 +7,6 @@ export function selectActionBar(state: GameState): ActionBarView {
         showStart: state.status === 'menu' || state.status === 'game-over',
         isRestart: state.status === 'game-over',
         canBrew: canBrew(state),
+        canPause: state.status === 'playing',
     };
 }

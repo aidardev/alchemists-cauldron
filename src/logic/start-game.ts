@@ -18,6 +18,7 @@ export function startGame(
         score: 0,
         timeLeft: LEVEL_ONE_RULES.startingTime,
         endTime: now + LEVEL_ONE_RULES.startingTime * 1000,
+        pausedAt: undefined,
         gameOverReason: undefined,
         lives: LEVEL_ONE_RULES.startingLives,
         lastBrew: undefined,

@@ -1,5 +1,7 @@
 .action-bar {
     display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-1-5);
     justify-content: center;
 }
 
@@ -44,5 +46,29 @@
 
     &[hidden] {
         display: none;
+    }
+
+    &--secondary {
+        display: inline-flex;
+        gap: var(--size-1);
+        align-items: center;
+        justify-content: center;
+        min-inline-size: auto;
+        padding-inline: var(--size-3);
+        font-size: var(--fs-body-lg);
+        color: var(--color-gold);
+        text-shadow: none;
+        background: var(--color-surface);
+        border-color: var(--color-border);
+        box-shadow: none;
+
+        svg {
+            inline-size: var(--size-3);
+            block-size: var(--size-3);
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
     }
 }
