@@ -1,5 +1,5 @@
-import { DIFFICULTY_RULES } from '@/data/difficulty';
 import type { LeaderboardEntry } from '@/types/leaderboard';
+import { isDifficulty } from './is-difficulty';
 
 export const LEADERBOARD_LIMIT = 10;
 
@@ -27,8 +27,7 @@ export function isLeaderboardEntry(value: unknown): value is LeaderboardEntry {
         typeof value === 'object' &&
         value !== null &&
         'difficulty' in value &&
-        typeof value.difficulty === 'string' &&
-        Object.hasOwn(DIFFICULTY_RULES, value.difficulty) &&
+        isDifficulty(value.difficulty) &&
         'name' in value &&
         typeof value.name === 'string' &&
         isPlayerNameValid(value.name) &&
