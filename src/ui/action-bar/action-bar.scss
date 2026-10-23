@@ -5,6 +5,26 @@
     justify-content: center;
 }
 
+.action-bar__save-summary {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: var(--fs-body-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.action-bar__save-error {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: var(--fs-body-sm);
+    color: var(--color-danger);
+    text-align: center;
+
+    &:empty {
+        display: none;
+    }
+}
+
 .action-bar__button {
     min-inline-size: min(100%, 16rem);
     padding: var(--size-2) var(--size-6);
