@@ -1,45 +1,48 @@
 import { canEnterLeaderboard } from '@/logic/leaderboard';
 import { LeaderboardStorage } from '@/storage/leaderboard';
+import type { Difficulty } from '@/types/difficulty';
 import type { GameState } from '@/types/game';
 import type { LeaderboardEntry } from '@/types/leaderboard';
-import type { GameStore } from './game-store';
 
 export class LeaderboardStore {
     private readonly storage: LeaderboardStorage;
-    private readonly unsubscribe: () => void;
-    private result: Pick<LeaderboardEntry, 'score' | 'timestamp'> | undefined;
+    private readonly now: () => number;
+    private result: Omit<LeaderboardEntry, 'name'> | undefined;
     private wasGameOver = false;
     private hasSubmitted = false;
 
     constructor(
-        store: GameStore,
         storage: LeaderboardStorage = new LeaderboardStorage(),
         now: () => number = Date.now,
     ) {
         this.storage = storage;
-        const update = (state: GameState): void => {
-            const isGameOver = state.status === 'game-over';
-            if (isGameOver && !this.wasGameOver) {
-                this.result = { score: state.score, timestamp: now() };
-                this.hasSubmitted = false;
-            } else if (!isGameOver) {
-                this.result = undefined;
-            }
-            this.wasGameOver = isGameOver;
-        };
-        this.unsubscribe = store.subscribe(update);
-        update(store.getState());
+        this.now = now;
     }
 
-    public getEntries(): readonly LeaderboardEntry[] {
-        return this.storage.read();
+    public update(state: GameState): void {
+        const isGameOver = state.status === 'game-over';
+        if (isGameOver && !this.wasGameOver) {
+            this.result = {
+                difficulty: state.difficulty,
+                score: state.score,
+                timestamp: this.now(),
+            };
+            this.hasSubmitted = false;
+        } else if (!isGameOver) {
+            this.result = undefined;
+        }
+        this.wasGameOver = isGameOver;
+    }
+
+    public getEntries(difficulty: Difficulty): readonly LeaderboardEntry[] {
+        return this.storage.read(difficulty);
     }
 
     public canSubmit(): boolean {
         return (
             !this.hasSubmitted &&
             this.result !== undefined &&
-            canEnterLeaderboard(this.getEntries(), this.result.score)
+            canEnterLeaderboard(this.getEntries(this.result.difficulty), this.result.score)
         );
     }
 
@@ -49,11 +52,7 @@ export class LeaderboardStore {
         return this.hasSubmitted;
     }
 
-    public clear(): boolean {
-        return this.storage.clear();
-    }
-
-    public destroy(): void {
-        this.unsubscribe();
+    public clear(difficulty: Difficulty): boolean {
+        return this.storage.clear(difficulty);
     }
 }

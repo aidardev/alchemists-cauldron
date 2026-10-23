@@ -1,4 +1,4 @@
-import { LEVEL_ONE_RULES } from '@/data/game-rules';
+import { DIFFICULTY_RULES } from '@/data/difficulty';
 import type { GameState } from '@/types/game';
 import type { Ingredient } from '@/types/ingredient';
 import type {
@@ -75,7 +75,7 @@ export function selectParameterBars(
     catalog: readonly Ingredient[],
 ): ParameterBarsView {
     const { ingredients, capacity } = selectCauldron(state, catalog);
-    const shelfCatalog = catalog.slice(0, LEVEL_ONE_RULES.shelfSize);
+    const shelfCatalog = catalog.slice(0, DIFFICULTY_RULES[state.difficulty].shelfSize);
 
     return {
         recipeName: state.activeRecipe?.name,

@@ -1,5 +1,8 @@
+import type { Difficulty } from './difficulty';
 import type { BrewOutcome, GameOverReason } from './game';
+import type { GameSaveError } from './game-save';
 import type { Ingredient } from './ingredient';
+import type { LeaderboardEntry } from './leaderboard';
 import type { ParameterKey, ParameterRange } from './parameters';
 import type { Recipe } from './recipe';
 
@@ -47,9 +50,19 @@ export interface ActionBarView {
     readonly showStart: boolean;
     readonly isRestart: boolean;
     readonly canBrew: boolean;
+    readonly canPause: boolean;
+    readonly continueGame: ContinueGameView | undefined;
+    readonly saveError: GameSaveError | undefined;
+}
+
+export interface ContinueGameView {
+    readonly difficulty: Difficulty;
+    readonly score: number;
+    readonly timeLeft: number;
 }
 
 export interface HeaderView {
+    readonly difficulty: Difficulty;
     readonly score: number;
     readonly timeLeft: number;
     readonly lives: number;
@@ -71,4 +84,15 @@ export interface PauseDialogView {
 
 export interface PlayFieldView {
     readonly isPaused: boolean;
+}
+
+export interface SettingsView {
+    readonly difficulty: Difficulty;
+    readonly canChange: boolean;
+}
+
+export interface LeaderboardView {
+    readonly difficulty: Difficulty;
+    readonly entries: readonly LeaderboardEntry[];
+    readonly message: string;
 }

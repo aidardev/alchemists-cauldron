@@ -1,17 +1,12 @@
-import { LEVEL_ONE_RULES } from '@/data/game-rules';
+import { DIFFICULTY_RULES } from '@/data/difficulty';
 import type { GameState } from '@/types/game';
 import type { Ingredient } from '@/types/ingredient';
 import type { CauldronView } from '@/types/view';
+import { getCauldronIngredients } from './get-cauldron-ingredients';
 
 export function selectCauldron(state: GameState, catalog: readonly Ingredient[]): CauldronView {
-    const byId = new Map(catalog.map((ingredient) => [ingredient.id, ingredient]));
-    const ingredients: Ingredient[] = [];
-
-    for (const id of state.cauldronIngredientIds) {
-        const ingredient = byId.get(id);
-
-        if (ingredient) ingredients.push(ingredient);
-    }
-
-    return { ingredients, capacity: LEVEL_ONE_RULES.cauldronCapacity };
+    return {
+        ingredients: getCauldronIngredients(state.cauldronIngredientIds, catalog),
+        capacity: DIFFICULTY_RULES[state.difficulty].maxCauldronSize,
+    };
 }

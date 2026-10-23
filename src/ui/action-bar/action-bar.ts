@@ -1,33 +1,43 @@
 import { BaseComponent } from '@/core/base-component';
+import { DIFFICULTY_LABELS } from '@/data/difficulty';
+import type { GameSaveError } from '@/types/game-save';
 import type { ActionBarView } from '@/types/view';
+import { formatTime } from '@/utils/format-time';
 import { html } from '@/utils/html';
 import './action-bar.scss';
+
+const SAVE_ERRORS: Readonly<Record<GameSaveError, string>> = {
+    save: 'Progress could not be saved. It may be lost when you leave this page.',
+    clear: 'Saved progress could not be cleared. It may reappear after a reload.',
+};
 
 interface ActionBarOptions {
     readonly onStart: () => void;
     readonly onBrew: () => void;
     readonly onPause: () => void;
-    readonly onLeaderboard: () => void;
+    readonly onContinue: () => void;
 }
 
 export class ActionBar extends BaseComponent<'div'> {
     private readonly startButton: HTMLButtonElement;
     private readonly brewButton: HTMLButtonElement;
     private readonly pauseButton: HTMLButtonElement;
-    private readonly leaderboardButton: HTMLButtonElement;
+    private readonly continueButton: HTMLButtonElement;
+    private readonly saveSummary: HTMLElement;
+    private readonly saveErrorLabel: HTMLElement;
 
-    constructor({ onStart, onBrew, onPause, onLeaderboard }: ActionBarOptions) {
+    constructor({ onStart, onBrew, onPause, onContinue }: ActionBarOptions) {
         super('div', 'action-bar');
 
         this.setHtml(html`
             <button
                 type="button"
-                class="action-bar__button action-bar__button--secondary"
-                data-action="leaderboard"
-                aria-haspopup="dialog"
-                aria-controls="leaderboard-dialog"
+                class="action-bar__button"
+                data-action="continue"
+                aria-describedby="saved-game-summary"
+                hidden
             >
-                Leaderboard
+                Continue Game
             </button>
             <button type="button" class="action-bar__button" data-action="start">Start game</button>
             <button type="button" class="action-bar__button" data-action="brew" disabled>
@@ -46,27 +56,49 @@ export class ActionBar extends BaseComponent<'div'> {
                 </svg>
                 Pause
             </button>
+            <p class="action-bar__save-summary" id="saved-game-summary" hidden></p>
+            <p class="action-bar__save-error" role="status"></p>
         `);
 
         this.startButton = this.getElement('[data-action="start"]');
         this.brewButton = this.getElement('[data-action="brew"]');
         this.pauseButton = this.getElement('[data-action="pause"]');
-        this.leaderboardButton = this.getElement('[data-action="leaderboard"]');
-        this.leaderboardButton.addEventListener('click', onLeaderboard, {
-            signal: this.eventSignal,
-        });
+        this.continueButton = this.getElement('[data-action="continue"]');
+        this.saveSummary = this.getElement('#saved-game-summary');
+        this.saveErrorLabel = this.getElement('.action-bar__save-error');
 
         this.startButton.addEventListener('click', onStart, { signal: this.eventSignal });
         this.brewButton.addEventListener('click', onBrew, { signal: this.eventSignal });
         this.pauseButton.addEventListener('click', onPause, { signal: this.eventSignal });
+        this.continueButton.addEventListener('click', onContinue, { signal: this.eventSignal });
     }
 
-    public render({ showStart, isRestart, canBrew, canPause }: ActionBarView): void {
+    public render({
+        showStart,
+        isRestart,
+        canBrew,
+        canPause,
+        continueGame,
+        saveError,
+    }: ActionBarView): void {
+        this.saveErrorLabel.textContent = saveError ? SAVE_ERRORS[saveError] : '';
         this.startButton.hidden = !showStart;
-        this.startButton.textContent = isRestart ? 'Play again' : 'Start game';
+        this.startButton.textContent = continueGame
+            ? 'New game'
+            : isRestart
+              ? 'Play again'
+              : 'Start game';
+        this.startButton.classList.toggle(
+            'action-bar__button--secondary',
+            continueGame !== undefined,
+        );
+        this.continueButton.hidden = !continueGame;
+        this.saveSummary.hidden = !continueGame;
+        this.saveSummary.textContent = continueGame
+            ? `${DIFFICULTY_LABELS[continueGame.difficulty]} · Score ${continueGame.score} · ${formatTime(continueGame.timeLeft)} remaining. Continue opens the game paused.`
+            : '';
         this.brewButton.hidden = showStart;
         this.brewButton.disabled = !canBrew;
         this.pauseButton.hidden = !canPause;
-        this.leaderboardButton.hidden = !showStart;
     }
 }
