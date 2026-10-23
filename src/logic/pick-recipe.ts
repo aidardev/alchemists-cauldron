@@ -1,5 +1,6 @@
 import { RECIPES } from '@/data/recipes';
-import type { Difficulty, Recipe } from '@/types/recipe';
+import type { Difficulty } from '@/types/difficulty';
+import type { Recipe } from '@/types/recipe';
 
 export function getRecipesByDifficulty(difficulty: Difficulty): readonly Recipe[] {
     return RECIPES.filter((recipe) => recipe.difficulty === difficulty);
