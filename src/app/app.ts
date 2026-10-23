@@ -56,6 +56,7 @@ export class App extends BaseComponent<'main'> {
                 onStart: () => store.startGame(),
                 onBrew: () => store.brew(),
                 onPause: () => store.pause(),
+                onContinue: () => store.continueGame(),
             }),
         );
 
@@ -82,7 +83,7 @@ export class App extends BaseComponent<'main'> {
             cauldron.render(selectCauldron(state, INGREDIENTS));
             parameterBars.render(selectParameterBars(state, INGREDIENTS));
             recipePanel.render(selectRecipePanel(state));
-            actionBar.render(selectActionBar(state));
+            actionBar.render(selectActionBar(state, store.getSavedGame(), store.getSaveError()));
         };
 
         this.unsubscribe = store.subscribe(render);

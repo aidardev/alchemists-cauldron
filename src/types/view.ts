@@ -1,5 +1,6 @@
 import type { Difficulty } from './difficulty';
 import type { BrewOutcome, GameOverReason } from './game';
+import type { GameSaveError } from './game-save';
 import type { Ingredient } from './ingredient';
 import type { LeaderboardEntry } from './leaderboard';
 import type { ParameterKey, ParameterRange } from './parameters';
@@ -50,6 +51,14 @@ export interface ActionBarView {
     readonly isRestart: boolean;
     readonly canBrew: boolean;
     readonly canPause: boolean;
+    readonly continueGame: ContinueGameView | undefined;
+    readonly saveError: GameSaveError | undefined;
+}
+
+export interface ContinueGameView {
+    readonly difficulty: Difficulty;
+    readonly score: number;
+    readonly timeLeft: number;
 }
 
 export interface HeaderView {
