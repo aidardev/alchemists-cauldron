@@ -15,6 +15,9 @@ export class GameVisibility {
         this.page.addEventListener('visibilitychange', this.handleVisibilityChange, {
             signal: this.abortController.signal,
         });
+        this.page.defaultView?.addEventListener('pagehide', () => this.store.saveGame(), {
+            signal: this.abortController.signal,
+        });
         this.handleVisibilityChange();
     }
 
