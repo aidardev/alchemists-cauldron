@@ -4,7 +4,9 @@ import { exitToMenu } from '@/logic/exit-to-menu';
 import { updateGameTime } from '@/logic/game-time';
 import { pauseGame } from '@/logic/pause-game';
 import { resumeGame } from '@/logic/resume-game';
+import { setDifficulty } from '@/logic/set-difficulty';
 import { startGame } from '@/logic/start-game';
+import type { Difficulty } from '@/types/difficulty';
 import { addIngredient } from '../logic/add-ingredient';
 import type { GameState } from '../types/game';
 
@@ -48,7 +50,11 @@ export class GameStore {
     }
 
     public startGame(): void {
-        this.setState(startGame(undefined, this.random, this.now()));
+        this.setState(startGame(this.state.difficulty, undefined, this.random, this.now()));
+    }
+
+    public setDifficulty(difficulty: Difficulty): void {
+        this.setState(setDifficulty(this.state, difficulty));
     }
 
     public addIngredient(id: string): void {

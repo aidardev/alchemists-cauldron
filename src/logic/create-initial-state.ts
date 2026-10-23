@@ -1,7 +1,10 @@
+import { DEFAULT_DIFFICULTY } from '@/data/difficulty';
+import type { Difficulty } from '@/types/difficulty';
 import type { GameState } from '@/types/game';
 
-export function createInitialState(): GameState {
+export function createInitialState(difficulty: Difficulty = DEFAULT_DIFFICULTY): GameState {
     return {
+        difficulty,
         status: 'menu',
         shelfStock: {},
         cauldronIngredientIds: [],

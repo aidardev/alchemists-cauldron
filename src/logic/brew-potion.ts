@@ -1,4 +1,4 @@
-import { LEVEL_ONE_RULES } from '@/data/game-rules';
+import { DIFFICULTY_RULES } from '@/data/difficulty';
 import { INGREDIENTS } from '@/data/ingredients';
 import type { GameState } from '@/types/game';
 import type { Ingredient } from '@/types/ingredient';
@@ -7,8 +7,8 @@ import { canBrew } from './can-brew';
 import { isBrewSuccessful } from './check-brew';
 import { finishGame } from './finish-game';
 import { getTimeLeft, updateGameTime } from './game-time';
+import { getCauldronIngredients } from './get-cauldron-ingredients';
 import { pickRecipe } from './pick-recipe';
-import { selectCauldron } from './select-cauldron';
 
 export function brewPotion(
     state: GameState,
@@ -19,25 +19,26 @@ export function brewPotion(
     const current = updateGameTime(state, now);
     if (!canBrew(current) || !current.activeRecipe || current.endTime === undefined) return current;
 
-    const { ingredients } = selectCauldron(current, catalog);
+    const rules = DIFFICULTY_RULES[current.difficulty];
+    const ingredients = getCauldronIngredients(current.cauldronIngredientIds, catalog);
     const success = isBrewSuccessful(
         calculateCauldron(ingredients),
         current.activeRecipe.targets,
-        LEVEL_ONE_RULES.recipeTolerance,
+        rules.tolerance,
     );
 
     if (success) {
         // Extend the exact deadline, rather than the rounded display value.
         const endTime = Math.min(
-            current.endTime + LEVEL_ONE_RULES.timeBonus * 1000,
-            now + LEVEL_ONE_RULES.startingTime * 1000,
+            current.endTime + rules.timeBonusSeconds * 1000,
+            now + rules.startTimeSeconds * 1000,
         );
 
         return finishGame({
             ...current,
             cauldronIngredientIds: [],
-            activeRecipe: pickRecipe(LEVEL_ONE_RULES.difficulty, random),
-            score: current.score + LEVEL_ONE_RULES.scorePerBrew,
+            activeRecipe: pickRecipe(current.difficulty, random),
+            score: current.score + rules.scorePerBrew,
             endTime,
             timeLeft: getTimeLeft(endTime, now),
             lastBrew: 'success',
