@@ -35,8 +35,9 @@ export class HelpDialog extends Dialog {
             </p>
             <ol>
                 <li>
-                    Press Start game to begin with ${rules.startTimeSeconds} seconds and
-                    ${rules.lives} lives.
+                    Choose a difficulty in Settings before starting. Press Start game to begin with
+                    ${rules.startTimeSeconds} seconds and ${rules.lives} lives. Difficulty stays
+                    fixed for the run.
                 </li>
                 <li>
                     Click ingredients to add them to the cauldron. The shelf has ${rules.shelfSize}
@@ -44,8 +45,9 @@ export class HelpDialog extends Dialog {
                     holds up to ${rules.maxCauldronSize} portions.
                 </li>
                 <li>
-                    Every ingredient changes Temperature, Density and Magic Power. Match all three
-                    recipe ranges; brewing allows ±${rules.tolerance} on each parameter.
+                    Temperature, Density and Magic Power are the sums of the added ingredient
+                    values. Match all three recipe ranges. Brewing accepts values up to
+                    ${rules.tolerance} below each range's minimum or above its maximum.
                 </li>
                 <li>
                     Press Brew to check the mixture. Success awards ${rules.scorePerBrew} points,
@@ -60,6 +62,13 @@ export class HelpDialog extends Dialog {
             <p>
                 Pause stops the clock and hides the field. Hiding the browser tab also pauses the
                 game. Resume continues the same mixture; Exit to Menu discards the run.
+            </p>
+            <h3>Save and continue</h3>
+            <p>
+                Progress is saved automatically. After reloading or reopening the page, Continue
+                Game restores your unfinished run in a paused state, including the mixture and
+                remaining stock. Press Resume to continue. New game replaces the save; Exit to Menu
+                clears it.
             </p>
             <h3>Game Over and scores</h3>
             <p>
