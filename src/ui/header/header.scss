@@ -19,6 +19,12 @@
         0 var(--border-width-medium) 0 rgb(0 0 0 / 60%);
 }
 
+.header__difficulty {
+    margin: 0;
+    font-size: var(--fs-body-sm);
+    color: var(--color-text-muted);
+}
+
 .header__divider {
     position: relative;
     inline-size: min(100%, 28rem);
