@@ -1,0 +1,42 @@
+.settings-dialog__rules {
+    padding: var(--size-2);
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-medium);
+}
+
+.settings-dialog__heading {
+    margin: 0 0 var(--size-2);
+    font-family: var(--font-family-display);
+    font-size: var(--fs-heading-sm);
+    color: var(--color-alchemy);
+}
+
+.settings-dialog__stats {
+    display: grid;
+    gap: var(--size-1);
+    margin: 0;
+
+    > div {
+        display: flex;
+        gap: var(--size-2);
+        justify-content: space-between;
+    }
+
+    dt {
+        color: var(--color-text-muted);
+    }
+
+    dd {
+        margin: 0;
+        font-weight: 700;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+}
+.settings-dialog__section-title {
+    margin-block: var(--size-3) 0;
+    font-family: var(--font-family-display);
+    font-size: var(--fs-body-lg);
+    color: var(--color-gold);
+}

@@ -1,5 +1,6 @@
 .app {
     display: grid;
+    grid-template-rows: 1fr auto;
     inline-size: min(100%, var(--container-width));
     min-block-size: 100dvh;
     margin-inline: auto;
