@@ -4,7 +4,6 @@ import { selectActionBar } from '@/logic/select-action-bar';
 import { selectCauldron } from '@/logic/select-cauldron';
 import { selectHeader } from '@/logic/select-header';
 import { selectParameterBars } from '@/logic/select-parameter-bars';
-import { selectPauseDialog } from '@/logic/select-pause-dialog';
 import { selectPlayField } from '@/logic/select-play-field';
 import { selectRecipePanel } from '@/logic/select-recipe-panel';
 import { selectShelfSlots } from '@/logic/select-shelf-slots';
@@ -14,10 +13,11 @@ import { GameVisibility } from '@/state/game-visibility';
 import type { GameState } from '@/types/game';
 import { ActionBar } from '@/ui/action-bar/action-bar';
 import { Cauldron } from '@/ui/cauldron/cauldron';
+import { GameMenuController } from '@/ui/game-menu/game-menu-controller';
 import { GameResultsController } from '@/ui/game-results/game-results-controller';
 import { Header } from '@/ui/header/header';
+import { MenuActions } from '@/ui/menu-actions/menu-actions';
 import { ParameterBars } from '@/ui/parameter-bars/parameter-bars';
-import { PauseDialog } from '@/ui/pause-dialog/pause-dialog';
 import { PlayField } from '@/ui/play-field/play-field';
 import { RecipePanel } from '@/ui/recipe-panel/recipe-panel';
 import { Shelf } from '@/ui/shelf/shelf';
@@ -28,6 +28,7 @@ export class App extends BaseComponent<'main'> {
     private readonly timer: GameTimer;
     private readonly visibility: GameVisibility;
     private readonly gameResults: GameResultsController;
+    private readonly gameMenu: GameMenuController;
 
     constructor(store: GameStore = new GameStore()) {
         super('main', 'app');
@@ -41,10 +42,13 @@ export class App extends BaseComponent<'main'> {
         const recipePanel = this.adopt(new RecipePanel());
         const gameResults = new GameResultsController(store);
         this.gameResults = gameResults;
-        const pauseDialog = this.adopt(
-            new PauseDialog({
-                onResume: () => store.resume(),
-                onExitToMenu: () => store.exitToMenu(),
+        const gameMenu = new GameMenuController(store, () => gameResults.openLeaderboard());
+        this.gameMenu = gameMenu;
+        const menuActions = this.adopt(
+            new MenuActions({
+                onHelp: () => gameMenu.openHelp(),
+                onSettings: () => gameMenu.openSettings(),
+                onLeaderboard: () => gameMenu.openLeaderboard(),
             }),
         );
         const actionBar = this.adopt(
@@ -52,7 +56,6 @@ export class App extends BaseComponent<'main'> {
                 onStart: () => store.startGame(),
                 onBrew: () => store.brew(),
                 onPause: () => store.pause(),
-                onLeaderboard: () => gameResults.openLeaderboard(),
             }),
         );
 
@@ -65,7 +68,12 @@ export class App extends BaseComponent<'main'> {
             actionBar.element,
         );
 
-        this.element.append(field.element, ...gameResults.elements, pauseDialog.element);
+        this.element.append(
+            field.element,
+            menuActions.element,
+            ...gameResults.elements,
+            ...gameMenu.elements,
+        );
 
         const render = (state: GameState): void => {
             field.render(selectPlayField(state));
@@ -75,7 +83,6 @@ export class App extends BaseComponent<'main'> {
             parameterBars.render(selectParameterBars(state, INGREDIENTS));
             recipePanel.render(selectRecipePanel(state));
             actionBar.render(selectActionBar(state));
-            pauseDialog.render(selectPauseDialog(state));
         };
 
         this.unsubscribe = store.subscribe(render);
@@ -88,6 +95,7 @@ export class App extends BaseComponent<'main'> {
         this.unsubscribe();
         this.timer.destroy();
         this.visibility.destroy();
+        this.gameMenu.destroy();
         this.gameResults.destroy();
         super.destroy();
     }

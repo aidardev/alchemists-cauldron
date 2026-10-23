@@ -1,3 +1,4 @@
+import type { Difficulty } from './difficulty';
 import type { Recipe } from './recipe';
 
 export type GameStatus = 'menu' | 'playing' | 'paused' | 'game-over';
@@ -9,6 +10,7 @@ export type BrewOutcome = 'success' | 'failure';
 export type GameOverReason = 'time-up' | 'no-lives' | 'out-of-ingredients';
 
 export interface GameState {
+    readonly difficulty: Difficulty;
     readonly status: GameStatus;
     readonly shelfStock: ShelfStock;
     readonly cauldronIngredientIds: readonly string[];

@@ -1,3 +1,4 @@
+import { DIFFICULTY_RULES } from '@/data/difficulty';
 import type { LeaderboardEntry } from '@/types/leaderboard';
 
 export const LEADERBOARD_LIMIT = 10;
@@ -25,6 +26,9 @@ export function isLeaderboardEntry(value: unknown): value is LeaderboardEntry {
     return (
         typeof value === 'object' &&
         value !== null &&
+        'difficulty' in value &&
+        typeof value.difficulty === 'string' &&
+        Object.hasOwn(DIFFICULTY_RULES, value.difficulty) &&
         'name' in value &&
         typeof value.name === 'string' &&
         isPlayerNameValid(value.name) &&

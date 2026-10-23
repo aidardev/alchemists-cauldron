@@ -17,7 +17,9 @@ export class PauseDialog extends Dialog {
             modifier: 'dialog--centered',
             labelledBy: 'pause-title',
             describedBy: 'pause-description',
-            onClose: onResume,
+            onClose: (returnValue) => {
+                if (returnValue !== 'state-change') onResume();
+            },
         });
         this.element.id = 'pause-dialog';
 
@@ -69,6 +71,6 @@ export class PauseDialog extends Dialog {
         this.scoreLabel.textContent = String(score);
         this.timeLabel.textContent = formatTime(timeLeft);
         if (isVisible) this.open();
-        else this.close();
+        else this.close('state-change');
     }
 }

@@ -1,4 +1,5 @@
 import { BaseComponent } from '@/core/base-component';
+import { DIFFICULTY_LABELS } from '@/data/difficulty';
 import type { HeaderView } from '@/types/view';
 import { formatTime } from '@/utils/format-time';
 import { html } from '@/utils/html';
@@ -9,12 +10,14 @@ export class Header extends BaseComponent<'header'> {
     private readonly timeLabel: HTMLElement;
     private readonly livesLabel: HTMLElement;
     private readonly timeProgress: HTMLElement;
+    private readonly difficultyLabel: HTMLElement;
 
     constructor() {
         super('header', 'header');
 
         this.setHtml(html`
             <h1 class="header__title">Alchemist's Cauldron</h1>
+            <p class="header__difficulty"></p>
             <span class="header__divider" aria-hidden="true"></span>
             <dl class="header__stats" aria-label="Game stats">
                 <div>
@@ -47,9 +50,18 @@ export class Header extends BaseComponent<'header'> {
         this.timeLabel = this.getElement('[data-stat="time"]');
         this.livesLabel = this.getElement('[data-stat="lives"]');
         this.timeProgress = this.getElement('.header__time-progress');
+        this.difficultyLabel = this.getElement('.header__difficulty');
     }
 
-    public render({ score, timeLeft, lives, timeProgress, isTimeCritical }: HeaderView): void {
+    public render({
+        difficulty,
+        score,
+        timeLeft,
+        lives,
+        timeProgress,
+        isTimeCritical,
+    }: HeaderView): void {
+        this.difficultyLabel.textContent = `${DIFFICULTY_LABELS[difficulty]} difficulty`;
         this.scoreLabel.textContent = String(score);
         this.timeLabel.textContent = formatTime(timeLeft);
         this.livesLabel.textContent = String(lives);

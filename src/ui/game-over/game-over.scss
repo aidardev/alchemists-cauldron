@@ -1,0 +1,66 @@
+@use '../../styles/index' as styles;
+
+.game-over__form {
+    padding-block-end: var(--size-3);
+    border-block-end: var(--border-width-thin) solid var(--color-border);
+}
+
+.game-over__qualification {
+    margin-block: 0 var(--size-1);
+    font-weight: 700;
+    color: var(--color-alchemy);
+}
+
+.game-over__entry {
+    display: grid;
+    grid-template-areas:
+        'name'
+        'hint'
+        'submit';
+    gap: var(--size-1);
+    margin-block-start: var(--size-1);
+
+    .dialog__input {
+        grid-area: name;
+        margin: 0;
+    }
+
+    .dialog__hint {
+        grid-area: hint;
+        margin: 0;
+    }
+
+    @include styles.min-width(styles.$br-sm) {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            'name submit'
+            'hint hint';
+    }
+}
+
+.game-over__submit {
+    grid-area: submit;
+    font-size: var(--fs-body);
+}
+
+.game-over__actions {
+    display: grid;
+    gap: var(--size-1-5);
+    margin-block-start: var(--size-3);
+}
+
+.game-over__secondary-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: var(--size-1-5);
+
+    .dialog__button {
+        padding-inline: var(--size-1-5);
+        font-family: var(--font-family-primary);
+        font-size: var(--fs-body);
+    }
+}
+
+.game-over__message:empty {
+    display: none;
+}
