@@ -1,0 +1,48 @@
+@use '../../styles/index' as styles;
+
+.difficulty-selector {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--size-1);
+    margin-block: var(--size-3);
+}
+
+.difficulty-selector__button {
+    min-inline-size: 0;
+    min-block-size: var(--size-6);
+    padding: var(--size-1);
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-small);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+
+    @include styles.hover {
+        &:not(:disabled) {
+            background: var(--color-surface-raised);
+            border-color: var(--color-gold);
+        }
+    }
+
+    &[aria-pressed='true'] {
+        color: var(--color-alchemy);
+        background: color-mix(in srgb, var(--color-alchemy) 10%, var(--color-bg));
+        border-color: var(--color-alchemy);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .difficulty-selector__button {
+        transition: none;
+    }
+}

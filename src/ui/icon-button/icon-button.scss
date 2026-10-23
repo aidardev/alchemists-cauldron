@@ -1,0 +1,75 @@
+@use '../../styles/index' as styles;
+
+.icon-button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    inline-size: var(--size-6);
+    block-size: var(--size-6);
+    padding: var(--size-1-5);
+    color: var(--color-gold);
+    cursor: pointer;
+    background: var(--color-surface);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: 50%;
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+
+    svg {
+        inline-size: 100%;
+        block-size: 100%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    @include styles.hover {
+        background: var(--color-surface-raised);
+        border-color: var(--color-gold);
+
+        .icon-button__tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    &:focus-visible {
+        border-color: var(--color-gold);
+
+        .icon-button__tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    &:active {
+        background: var(--color-bg);
+    }
+}
+
+.icon-button__tooltip {
+    position: absolute;
+    inset-block-end: calc(100% + var(--size-1));
+    inset-inline-end: 0;
+    z-index: var(--z-overlay);
+    padding: var(--size-05) var(--size-1);
+    font-size: var(--fs-body-sm);
+    color: var(--color-text);
+    white-space: nowrap;
+    pointer-events: none;
+    visibility: hidden;
+    background: var(--color-bg);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--corner-small);
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .icon-button {
+        transition: none;
+    }
+}
