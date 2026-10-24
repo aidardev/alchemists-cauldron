@@ -13,8 +13,6 @@ const BREW_MESSAGES: Readonly<Record<BrewOutcome, string>> = {
 export class RecipePanel extends BaseComponent<'section'> {
     private readonly nameLabel: HTMLElement;
     private readonly countLabel: HTMLElement;
-    private readonly hintLabel: HTMLElement;
-    private readonly toleranceLabel: HTMLElement;
     private readonly feedback: HTMLElement;
     private readonly ranges: Readonly<Record<ParameterKey, HTMLElement>>;
 
@@ -43,7 +41,6 @@ export class RecipePanel extends BaseComponent<'section'> {
                 <span>Ingredients</span>
                 <strong class="recipe-panel__count">0 / 4</strong>
             </div>
-            <p class="recipe-panel__hint"></p>
             <dl class="recipe-panel__ranges">
                 <div class="recipe-panel__range recipe-panel__range--temperature">
                     <dt>Temperature</dt>
@@ -58,14 +55,11 @@ export class RecipePanel extends BaseComponent<'section'> {
                     <dd data-range="magicPower">—</dd>
                 </div>
             </dl>
-            <p class="recipe-panel__tolerance"></p>
             <p class="recipe-panel__feedback" role="status" aria-atomic="true"></p>
         `);
 
         this.nameLabel = this.getElement('.recipe-panel__name');
         this.countLabel = this.getElement('.recipe-panel__count');
-        this.hintLabel = this.getElement('.recipe-panel__hint');
-        this.toleranceLabel = this.getElement('.recipe-panel__tolerance');
         this.feedback = this.getElement('.recipe-panel__feedback');
         this.ranges = {
             temperature: this.getElement('[data-range="temperature"]'),
@@ -75,19 +69,12 @@ export class RecipePanel extends BaseComponent<'section'> {
     }
 
     public render(view: RecipePanelView): void {
-        const { recipe, ingredientCount, capacity, isFull, tolerance, lastBrew, isGameOver } = view;
+        const { recipe, ingredientCount, capacity, isFull, lastBrew, isGameOver } = view;
         this.nameLabel.textContent = recipe?.name ?? 'Your next discovery';
         this.countLabel.textContent = `${ingredientCount} / ${capacity}`;
         this.element.classList.toggle('recipe-panel--full', isFull);
         this.element.classList.toggle('recipe-panel--success', lastBrew === 'success');
         this.element.classList.toggle('recipe-panel--failure', lastBrew === 'failure');
-        this.hintLabel.textContent = isFull
-            ? 'Cauldron full — brew to make room.'
-            : 'Add ingredients to match the target ranges.';
-        this.hintLabel.hidden = !recipe || isGameOver;
-        this.toleranceLabel.textContent = recipe
-            ? `Brew allowance: ±${tolerance} on each parameter.`
-            : 'Start a game to reveal your first recipe.';
 
         for (const key of Object.keys(this.ranges) as ParameterKey[]) {
             const range = recipe?.targets[key];
