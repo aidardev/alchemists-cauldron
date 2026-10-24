@@ -40,6 +40,7 @@ export abstract class Dialog extends BaseComponent<'dialog'> {
 
     constructor({ modifier, labelledBy, describedBy, onClose }: DialogOptions) {
         super('dialog', modifier ? `dialog ${modifier}` : 'dialog');
+        this.element.classList.add('custom-scrollbar');
         this.onClose = onClose;
         this.element.setAttribute('aria-labelledby', labelledBy);
         if (describedBy) this.element.setAttribute('aria-describedby', describedBy);

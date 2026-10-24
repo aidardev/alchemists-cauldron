@@ -7,10 +7,10 @@
         'recipe'
         'cauldron'
         'parameters'
-        'shelf'
-        'actions';
+        'shelf';
     grid-template-columns: minmax(0, 1fr);
     gap: var(--size-3);
+    row-gap: calc(var(--size-3) + var(--size-05));
     min-inline-size: 0;
 
     > .header {
@@ -18,13 +18,10 @@
     }
     > .shelf {
         grid-area: shelf;
-        align-self: start;
+        align-self: center;
     }
     > .cauldron {
         grid-area: cauldron;
-    }
-    > .action-bar {
-        grid-area: actions;
     }
     > .parameter-bars {
         grid-area: parameters;
@@ -49,10 +46,9 @@
             'header header'
             'shelf cauldron'
             'shelf recipe'
-            'parameters parameters'
-            'actions actions';
+            'parameters parameters';
         grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr);
-        grid-template-rows: auto auto 1fr auto auto;
+        grid-template-rows: auto auto 1fr auto;
         gap: var(--size-4);
     }
 
@@ -60,9 +56,9 @@
         grid-template-areas:
             'header header header'
             'shelf cauldron recipe'
-            'parameters parameters parameters'
-            'actions actions actions';
+            'parameters parameters parameters';
         grid-template-columns: 24rem minmax(0, 1fr) minmax(22rem, 24rem);
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-rows: auto 1fr auto;
+        row-gap: var(--size-3);
     }
 }

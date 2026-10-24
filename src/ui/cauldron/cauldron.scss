@@ -19,6 +19,7 @@
 }
 
 .cauldron__glow {
+    pointer-events: none;
     position: absolute;
     inset: -10% -15% -5%;
     background: radial-gradient(
@@ -52,12 +53,10 @@
     filter: drop-shadow(0 0 var(--size-1) var(--color-alchemy));
 }
 
-// The opening of the pot: an ellipse of glowing liquid with an iron rim.
 .cauldron__liquid {
     position: absolute;
     inset: 15% 0 auto;
     block-size: 30%;
-    overflow: hidden;
     background: radial-gradient(
         ellipse at 50% 40%,
         var(--liquid-light) 0%,
@@ -110,6 +109,7 @@
             transparent 70%
         );
         filter: blur(var(--size-1));
+        pointer-events: none;
         opacity: 0;
         animation: cauldron-steam 6s ease-out infinite;
 
@@ -149,8 +149,6 @@
     border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--corner-large);
     counter-increment: ingredient;
-
-    // The order of ingredients matters, so the sequence number carries information.
     &::before {
         content: counter(ingredient);
         display: grid;

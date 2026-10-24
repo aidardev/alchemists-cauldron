@@ -1,9 +1,37 @@
+@use '../styles/index' as styles;
+
 .app {
     display: grid;
     grid-template-rows: 1fr auto;
+    gap: var(--size-3);
     inline-size: min(100%, var(--container-width));
     min-block-size: 100dvh;
     margin-inline: auto;
     overflow-x: clip;
     padding: var(--size-2) var(--container-padding-x) var(--size-4);
+
+    @include styles.min-width(styles.$br-xl) {
+        gap: var(--size-2);
+        padding-block: var(--size-2);
+    }
+}
+
+.app__controls {
+    display: grid;
+    gap: var(--size-3);
+    align-items: center;
+    min-inline-size: 0;
+
+    @include styles.min-width(styles.$br-xl) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+        gap: var(--size-2);
+
+        > .action-bar {
+            grid-column: 2;
+        }
+
+        > .menu-actions {
+            grid-column: 3;
+        }
+    }
 }
