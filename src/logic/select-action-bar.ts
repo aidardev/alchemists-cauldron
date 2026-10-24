@@ -11,6 +11,7 @@ export function selectActionBar(
     return {
         showStart: state.status === 'menu' || state.status === 'game-over',
         isRestart: state.status === 'game-over',
+        isPaused: state.status === 'paused',
         canBrew: canBrew(state),
         canPause: state.status === 'playing',
         saveError,

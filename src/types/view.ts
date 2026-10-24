@@ -49,6 +49,7 @@ export interface RecipePanelView {
 export interface ActionBarView {
     readonly showStart: boolean;
     readonly isRestart: boolean;
+    readonly isPaused: boolean;
     readonly canBrew: boolean;
     readonly canPause: boolean;
     readonly continueGame: ContinueGameView | undefined;

@@ -76,11 +76,15 @@ export class ActionBar extends BaseComponent<'div'> {
     public render({
         showStart,
         isRestart,
+        isPaused,
         canBrew,
         canPause,
         continueGame,
         saveError,
     }: ActionBarView): void {
+        this.element.inert = isPaused;
+        this.element.classList.toggle('action-bar--paused', isPaused);
+        this.element.setAttribute('aria-hidden', String(isPaused));
         this.saveErrorLabel.textContent = saveError ? SAVE_ERRORS[saveError] : '';
         this.startButton.hidden = !showStart;
         this.startButton.textContent = continueGame
