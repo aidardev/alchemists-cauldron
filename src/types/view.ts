@@ -32,7 +32,6 @@ export interface CauldronView {
 }
 
 export interface ParameterBarsView {
-    readonly recipeName: string | undefined;
     readonly bars: readonly ParameterBarView[];
 }
 
@@ -41,7 +40,6 @@ export interface RecipePanelView {
     readonly ingredientCount: number;
     readonly capacity: number;
     readonly isFull: boolean;
-    readonly tolerance: number;
     readonly lastBrew: BrewOutcome | undefined;
     readonly isGameOver: boolean;
 }
