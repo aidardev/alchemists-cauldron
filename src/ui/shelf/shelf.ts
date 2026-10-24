@@ -23,7 +23,7 @@ export class Shelf extends BaseComponent<'section'> {
         this.setHtml(html`
             <h2 class="shelf__title" id="shelf-title">Ingredients</h2>
             <p class="shelf__empty">Start a game to stock the shelf.</p>
-            <ul class="shelf__list"></ul>
+            <ul class="shelf__list custom-scrollbar"></ul>
         `);
 
         this.list = this.getElement('.shelf__list');

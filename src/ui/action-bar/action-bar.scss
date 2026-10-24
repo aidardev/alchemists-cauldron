@@ -3,6 +3,11 @@
     flex-wrap: wrap;
     gap: var(--size-1-5);
     justify-content: center;
+
+    &--paused {
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 
 .action-bar__save-summary {

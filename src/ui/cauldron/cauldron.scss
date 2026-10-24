@@ -52,7 +52,6 @@
     filter: drop-shadow(0 0 var(--size-1) var(--color-alchemy));
 }
 
-// The opening of the pot: an ellipse of glowing liquid with an iron rim.
 .cauldron__liquid {
     position: absolute;
     inset: 15% 0 auto;
@@ -149,8 +148,6 @@
     border: var(--border-width-thin) solid var(--color-border);
     border-radius: var(--corner-large);
     counter-increment: ingredient;
-
-    // The order of ingredients matters, so the sequence number carries information.
     &::before {
         content: counter(ingredient);
         display: grid;

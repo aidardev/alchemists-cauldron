@@ -30,4 +30,39 @@
     .is-locked {
         overflow: hidden;
     }
+
+    .custom-scrollbar {
+        scrollbar-width: var(--scrollbar-width, thin);
+        scrollbar-color: var(--color-border) transparent;
+
+        @supports selector(::-webkit-scrollbar) {
+            scrollbar-width: auto;
+            scrollbar-color: auto;
+
+            &::-webkit-scrollbar {
+                width: var(--scrollbar-size, var(--size-1));
+                height: var(--scrollbar-size, var(--size-1));
+            }
+
+            &::-webkit-scrollbar-track,
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: var(--color-border);
+                background-clip: padding-box;
+                border: var(--border-width-medium) solid transparent;
+                border-radius: var(--corner-large);
+
+                &:hover {
+                    background-color: var(--color-gold);
+                }
+            }
+
+            &::-webkit-scrollbar-button {
+                display: none;
+            }
+        }
+    }
 }

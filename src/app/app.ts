@@ -66,15 +66,13 @@ export class App extends BaseComponent<'main'> {
             cauldron.element,
             recipePanel.element,
             parameterBars.element,
-            actionBar.element,
         );
 
-        this.element.append(
-            field.element,
-            menuActions.element,
-            ...gameResults.elements,
-            ...gameMenu.elements,
-        );
+        const controls = document.createElement('div');
+        controls.className = 'app__controls';
+        controls.append(actionBar.element, menuActions.element);
+
+        this.element.append(field.element, controls, ...gameResults.elements, ...gameMenu.elements);
 
         const render = (state: GameState): void => {
             field.render(selectPlayField(state));
