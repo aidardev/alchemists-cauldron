@@ -4,6 +4,7 @@ import { createInitialState } from '@/logic/create-initial-state';
 import { exitToMenu } from '@/logic/exit-to-menu';
 import { updateGameTime } from '@/logic/game-time';
 import { pauseGame } from '@/logic/pause-game';
+import { pourOut } from '@/logic/pour-out';
 import { restoreGame } from '@/logic/restore-game';
 import { resumeGame } from '@/logic/resume-game';
 import { setDifficulty } from '@/logic/set-difficulty';
@@ -115,6 +116,10 @@ export class GameStore {
 
     public brew(): void {
         this.setState(brewPotion(this.state, undefined, this.random, this.now()));
+    }
+
+    public pourOut(): void {
+        this.setState(pourOut(this.state, this.now()));
     }
 
     public tick(): void {

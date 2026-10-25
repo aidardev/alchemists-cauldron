@@ -55,6 +55,7 @@ export class App extends BaseComponent<'main'> {
             new ActionBar({
                 onStart: () => store.startGame(),
                 onBrew: () => store.brew(),
+                onPourOut: () => store.pourOut(),
                 onPause: () => store.pause(),
                 onContinue: () => store.continueGame(),
             }),

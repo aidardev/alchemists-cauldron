@@ -1,3 +1,5 @@
+@use '../../styles/index' as styles;
+
 .action-bar {
     display: flex;
     flex-wrap: wrap;
@@ -16,6 +18,16 @@
     font-size: var(--fs-body-sm);
     color: var(--color-text-muted);
     text-align: center;
+}
+
+.action-bar__cost {
+    font-family: var(--font-family-primary);
+    font-size: var(--fs-body-sm);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    @include styles.max-width(styles.$br-sm) {
+        display: none;
+    }
 }
 
 .action-bar__save-error {

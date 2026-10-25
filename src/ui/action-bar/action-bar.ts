@@ -14,6 +14,7 @@ const SAVE_ERRORS: Readonly<Record<GameSaveError, string>> = {
 interface ActionBarOptions {
     readonly onStart: () => void;
     readonly onBrew: () => void;
+    readonly onPourOut: () => void;
     readonly onPause: () => void;
     readonly onContinue: () => void;
 }
@@ -21,12 +22,14 @@ interface ActionBarOptions {
 export class ActionBar extends BaseComponent<'div'> {
     private readonly startButton: HTMLButtonElement;
     private readonly brewButton: HTMLButtonElement;
+    private readonly pourOutButton: HTMLButtonElement;
+    private readonly pourOutCostLabel: HTMLElement;
     private readonly pauseButton: HTMLButtonElement;
     private readonly continueButton: HTMLButtonElement;
     private readonly saveSummary: HTMLElement;
     private readonly saveErrorLabel: HTMLElement;
 
-    constructor({ onStart, onBrew, onPause, onContinue }: ActionBarOptions) {
+    constructor({ onStart, onBrew, onPourOut, onPause, onContinue }: ActionBarOptions) {
         super('div', 'action-bar');
 
         this.setHtml(html`
@@ -40,6 +43,16 @@ export class ActionBar extends BaseComponent<'div'> {
                 Continue Game
             </button>
             <button type="button" class="action-bar__button" data-action="start">Start game</button>
+            <button
+                type="button"
+                class="action-bar__button action-bar__button--secondary"
+                data-action="pour-out"
+                hidden
+                disabled
+            >
+                Pour Out
+                <span class="action-bar__cost" aria-hidden="true"></span>
+            </button>
             <button type="button" class="action-bar__button" data-action="brew" disabled>
                 Brew
             </button>
@@ -62,6 +75,8 @@ export class ActionBar extends BaseComponent<'div'> {
 
         this.startButton = this.getElement('[data-action="start"]');
         this.brewButton = this.getElement('[data-action="brew"]');
+        this.pourOutButton = this.getElement('[data-action="pour-out"]');
+        this.pourOutCostLabel = this.getElement('.action-bar__cost');
         this.pauseButton = this.getElement('[data-action="pause"]');
         this.continueButton = this.getElement('[data-action="continue"]');
         this.saveSummary = this.getElement('#saved-game-summary');
@@ -69,6 +84,7 @@ export class ActionBar extends BaseComponent<'div'> {
 
         this.startButton.addEventListener('click', onStart, { signal: this.eventSignal });
         this.brewButton.addEventListener('click', onBrew, { signal: this.eventSignal });
+        this.pourOutButton.addEventListener('click', onPourOut, { signal: this.eventSignal });
         this.pauseButton.addEventListener('click', onPause, { signal: this.eventSignal });
         this.continueButton.addEventListener('click', onContinue, { signal: this.eventSignal });
     }
@@ -78,6 +94,9 @@ export class ActionBar extends BaseComponent<'div'> {
         isRestart,
         isPaused,
         canBrew,
+        showPourOut,
+        canPourOut,
+        pourOutCost,
         canPause,
         continueGame,
         saveError,
@@ -103,6 +122,13 @@ export class ActionBar extends BaseComponent<'div'> {
             : '';
         this.brewButton.hidden = showStart;
         this.brewButton.disabled = !canBrew;
+        this.pourOutButton.hidden = !showPourOut;
+        this.pourOutButton.disabled = !canPourOut;
+        this.pourOutButton.setAttribute(
+            'aria-label',
+            `Pour out mixture (costs ${pourOutCost} seconds)`,
+        );
+        this.pourOutCostLabel.textContent = `−${pourOutCost} s`;
         this.pauseButton.hidden = !canPause;
     }
 }
