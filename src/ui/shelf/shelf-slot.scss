@@ -53,6 +53,14 @@
             'icon name stock'
             'icon stats stats';
     }
+
+    @media (hover: hover) and (pointer: fine) {
+        grid-template-areas: 'icon name stock';
+
+        .shelf-slot__stats {
+            display: none;
+        }
+    }
 }
 
 .shelf-slot__icon {

@@ -4,7 +4,7 @@ A browser puzzle game: mix ingredients to match a potion's Temperature, Density 
 
 ## Implemented
 
-- Ingredient shelf with visible stats, limited stock and a cauldron capacity counter.
+- Ingredient shelf with hover/focus tooltips, inline stats on touch devices, limited stock and a cauldron capacity counter.
 - 20 recipes across Easy, Medium and Hard, random recipe selection and brewing checks.
 - Animated parameter bars with target zones, value markers and in-range highlighting.
 - Score, lives, countdown, low-time warning and Game Over with the final score and reason.
@@ -18,7 +18,7 @@ A browser puzzle game: mix ingredients to match a potion's Temperature, Density 
 ## How to play
 
 1. Choose a difficulty in **Settings** (gear icon), then click **Start game**. Medium is the default. Difficulty is fixed for the run.
-2. Click ingredient cards or drag them into the cauldron to add portions. Cards show parameter values and remaining stock; each ingredient starts with 2–15 portions. The shelf locks when the cauldron is full. Each successful drop spends one portion; cancelling a drag spends nothing. On touch screens, tap the cards.
+2. Click ingredient cards or drag them into the cauldron to add portions. Hover or focus a card to read its base parameter values; on touch devices these stay inline. Stock always stays on the card, starting with 2–15 portions. The shelf locks when the cauldron is full, while tooltips remain available for stocked cards. Each successful drop spends one portion; cancelling a drag spends nothing. On touch screens, tap the cards.
 3. Match all three recipe ranges using the parameter bars. Values are ingredient sums; brewing allows the selected difficulty's tolerance on each side of each range.
 4. Click **Brew** with at least one ingredient. Success awards points, adds time and draws a new recipe. Failure costs one life and keeps the recipe. Every brew empties the cauldron; ingredients are spent permanently. Time bonuses are capped at the starting duration.
 5. Use **Pour Out −10 s** to discard a non-empty mixture without losing a life. The recipe and score stay the same; spent ingredients do not return. The action can end the run if time or supplies run out.
