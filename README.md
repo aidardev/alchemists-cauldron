@@ -12,6 +12,7 @@ A browser puzzle game: mix ingredients to match a potion's Temperature, Density 
 - A local Top-10 leaderboard per difficulty, with name validation and confirmation before clearing results.
 - Automatic saving and continuation through `localStorage`, saved-data validation and storage error handling.
 - Pour Out clears a mixture for 10 seconds without losing a life or returning ingredients.
+- Keyboard shortcuts for ingredients, brewing, pouring out and pausing during active play.
 - Responsive mobile and desktop layout with reduced-motion support.
 
 ## How to play
@@ -34,6 +35,21 @@ The bottom-right icons open **Help**, **Leaderboard** and **Settings**. Qualifyi
 | Brew tolerance     |   ±12 |     ±8 |    ±5 |
 | Points per success |   100 |    200 |   300 |
 | Time bonus         | +15 s |  +10 s |  +5 s |
+
+## Keyboard controls
+
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| 1–8          | Add an ingredient in shelf order |
+| B            | Brew                             |
+| X            | Pour Out                         |
+| P or Esc     | Pause                            |
+| Tab          | Move focus between controls      |
+| Enter, Space | Press the focused button         |
+
+Ingredient keys use the top number row: 1–4 on Easy, 1–6 on Medium and 1–8 on Hard. Empty slots keep their number. Letter shortcuts use physical key positions and work with other keyboard layouts.
+
+Game shortcuts run only during active play. Typing, held keys and modifier combinations are ignored. On pause, use the Resume button or press Esc to close the dialog and continue; normal keyboard navigation remains available in menus and dialogs.
 
 ## Save and continue
 
