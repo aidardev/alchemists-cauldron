@@ -9,6 +9,7 @@ export function selectCauldron(state: GameState, catalog: readonly Ingredient[])
     return {
         ingredients: getCauldronIngredients(state.cauldronIngredientIds, catalog),
         capacity: DIFFICULTY_RULES[state.difficulty].maxCauldronSize,
+        lastBrew: state.lastBrew,
         availableIngredientIds: catalog
             .filter((ingredient) => canAddIngredient(state, ingredient.id))
             .map((ingredient) => ingredient.id),

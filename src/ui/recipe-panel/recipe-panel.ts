@@ -1,19 +1,12 @@
 import { BaseComponent } from '@/core/base-component';
-import type { BrewOutcome } from '@/types/game';
 import type { ParameterKey } from '@/types/parameters';
 import type { RecipePanelView } from '@/types/view';
 import { html } from '@/utils/html';
 import './recipe-panel.scss';
 
-const BREW_MESSAGES: Readonly<Record<BrewOutcome, string>> = {
-    success: 'Last brew succeeded. Your next recipe is ready.',
-    failure: 'Last brew failed. One life lost — try a new mixture.',
-};
-
 export class RecipePanel extends BaseComponent<'section'> {
     private readonly nameLabel: HTMLElement;
     private readonly countLabel: HTMLElement;
-    private readonly feedback: HTMLElement;
     private readonly ranges: Readonly<Record<ParameterKey, HTMLElement>>;
 
     constructor() {
@@ -55,12 +48,10 @@ export class RecipePanel extends BaseComponent<'section'> {
                     <dd data-range="magicPower">—</dd>
                 </div>
             </dl>
-            <p class="recipe-panel__feedback" role="status" aria-atomic="true"></p>
         `);
 
         this.nameLabel = this.getElement('.recipe-panel__name');
         this.countLabel = this.getElement('.recipe-panel__count');
-        this.feedback = this.getElement('.recipe-panel__feedback');
         this.ranges = {
             temperature: this.getElement('[data-range="temperature"]'),
             density: this.getElement('[data-range="density"]'),
@@ -69,19 +60,14 @@ export class RecipePanel extends BaseComponent<'section'> {
     }
 
     public render(view: RecipePanelView): void {
-        const { recipe, ingredientCount, capacity, isFull, lastBrew, isGameOver } = view;
+        const { recipe, ingredientCount, capacity, isFull } = view;
         this.nameLabel.textContent = recipe?.name ?? 'Your next discovery';
         this.countLabel.textContent = `${ingredientCount} / ${capacity}`;
         this.element.classList.toggle('recipe-panel--full', isFull);
-        this.element.classList.toggle('recipe-panel--success', lastBrew === 'success');
-        this.element.classList.toggle('recipe-panel--failure', lastBrew === 'failure');
 
         for (const key of Object.keys(this.ranges) as ParameterKey[]) {
             const range = recipe?.targets[key];
             this.ranges[key].textContent = range ? `${range.min}…${range.max}` : '—';
         }
-
-        const message = lastBrew ? BREW_MESSAGES[lastBrew] : '';
-        this.feedback.textContent = isGameOver ? '' : message;
     }
 }

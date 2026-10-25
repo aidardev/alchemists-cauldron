@@ -1,5 +1,5 @@
 import type { Difficulty } from './difficulty';
-import type { BrewOutcome, GameOverReason } from './game';
+import type { BrewResult, GameOverReason } from './game';
 import type { GameSaveError } from './game-save';
 import type { Ingredient } from './ingredient';
 import type { LeaderboardEntry } from './leaderboard';
@@ -31,6 +31,7 @@ export interface CauldronView {
     readonly ingredients: readonly Ingredient[];
     readonly capacity: number;
     readonly availableIngredientIds: readonly string[];
+    readonly lastBrew: BrewResult | undefined;
 }
 
 export interface ParameterBarsView {
@@ -42,8 +43,6 @@ export interface RecipePanelView {
     readonly ingredientCount: number;
     readonly capacity: number;
     readonly isFull: boolean;
-    readonly lastBrew: BrewOutcome | undefined;
-    readonly isGameOver: boolean;
 }
 
 export interface ActionBarView {
@@ -88,6 +87,7 @@ export interface PauseDialogView {
 
 export interface PlayFieldView {
     readonly isPaused: boolean;
+    readonly lastBrew: BrewResult | undefined;
 }
 
 export interface SettingsView {
