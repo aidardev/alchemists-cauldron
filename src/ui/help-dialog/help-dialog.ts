@@ -41,9 +41,14 @@ export class HelpDialog extends Dialog {
                     fixed for the run.
                 </li>
                 <li>
-                    Click ingredients to add them to the cauldron. The shelf has ${rules.shelfSize}
-                    ingredient types, each with ${MIN_STOCK}–${MAX_STOCK} portions. The cauldron
-                    holds up to ${rules.maxCauldronSize} portions.
+                    Click ingredients or drag them into the cauldron. The shelf has
+                    ${rules.shelfSize} ingredient types, each with ${MIN_STOCK}–${MAX_STOCK}
+                    portions. The cauldron holds up to ${rules.maxCauldronSize} portions.
+                </li>
+                <li>
+                    Available cards can be dragged with a mouse. Drop one onto the highlighted
+                    cauldron to add one portion. Cancelling a drag spends nothing; on touch screens,
+                    tap a card to add it.
                 </li>
                 <li>
                     Temperature, Density and Magic Power are the sums of the added ingredient
