@@ -7,6 +7,7 @@ import { selectParameterBars } from '@/logic/select-parameter-bars';
 import { selectPlayField } from '@/logic/select-play-field';
 import { selectRecipePanel } from '@/logic/select-recipe-panel';
 import { selectShelfSlots } from '@/logic/select-shelf-slots';
+import { GameKeyboard } from '@/state/game-keyboard';
 import { GameStore } from '@/state/game-store';
 import { GameTimer } from '@/state/game-timer';
 import { GameVisibility } from '@/state/game-visibility';
@@ -27,6 +28,7 @@ export class App extends BaseComponent<'main'> {
     private readonly unsubscribe: () => void;
     private readonly timer: GameTimer;
     private readonly visibility: GameVisibility;
+    private readonly keyboard: GameKeyboard;
     private readonly gameResults: GameResultsController;
     private readonly gameMenu: GameMenuController;
 
@@ -37,7 +39,7 @@ export class App extends BaseComponent<'main'> {
 
         const header = this.adopt(new Header());
         const shelf = this.adopt(new Shelf({ onAdd: (id) => store.addIngredient(id) }));
-        const cauldron = this.adopt(new Cauldron());
+        const cauldron = this.adopt(new Cauldron({ onAdd: (id) => store.addIngredient(id) }));
         const parameterBars = this.adopt(new ParameterBars());
         const recipePanel = this.adopt(new RecipePanel());
         const gameResults = new GameResultsController(store);
@@ -55,6 +57,7 @@ export class App extends BaseComponent<'main'> {
             new ActionBar({
                 onStart: () => store.startGame(),
                 onBrew: () => store.brew(),
+                onPourOut: () => store.pourOut(),
                 onPause: () => store.pause(),
                 onContinue: () => store.continueGame(),
             }),
@@ -66,15 +69,13 @@ export class App extends BaseComponent<'main'> {
             cauldron.element,
             recipePanel.element,
             parameterBars.element,
-            actionBar.element,
         );
 
-        this.element.append(
-            field.element,
-            menuActions.element,
-            ...gameResults.elements,
-            ...gameMenu.elements,
-        );
+        const controls = document.createElement('div');
+        controls.className = 'app__controls';
+        controls.append(actionBar.element, menuActions.element);
+
+        this.element.append(field.element, controls, ...gameResults.elements, ...gameMenu.elements);
 
         const render = (state: GameState): void => {
             field.render(selectPlayField(state));
@@ -90,12 +91,14 @@ export class App extends BaseComponent<'main'> {
         render(store.getState());
         this.timer = new GameTimer(store);
         this.visibility = new GameVisibility(store);
+        this.keyboard = new GameKeyboard(store);
     }
 
     public override destroy(): void {
         this.unsubscribe();
         this.timer.destroy();
         this.visibility.destroy();
+        this.keyboard.destroy();
         this.gameMenu.destroy();
         this.gameResults.destroy();
         super.destroy();

@@ -41,7 +41,7 @@ export function brewPotion(
             score: current.score + rules.scorePerBrew,
             endTime,
             timeLeft: getTimeLeft(endTime, now),
-            lastBrew: 'success',
+            lastBrew: { outcome: 'success' },
         });
     }
 
@@ -51,6 +51,6 @@ export function brewPotion(
         ...current,
         cauldronIngredientIds: [],
         lives,
-        lastBrew: 'failure',
+        lastBrew: { outcome: 'failure' },
     });
 }

@@ -7,6 +7,10 @@ export type ShelfStock = Readonly<Record<string, number>>;
 
 export type BrewOutcome = 'success' | 'failure';
 
+export interface BrewResult {
+    readonly outcome: BrewOutcome;
+}
+
 export type GameOverReason = 'time-up' | 'no-lives' | 'out-of-ingredients';
 
 export interface GameState {
@@ -21,5 +25,5 @@ export interface GameState {
     readonly pausedAt: number | undefined;
     readonly gameOverReason: GameOverReason | undefined;
     readonly lives: number;
-    readonly lastBrew: BrewOutcome | undefined;
+    readonly lastBrew: BrewResult | undefined;
 }

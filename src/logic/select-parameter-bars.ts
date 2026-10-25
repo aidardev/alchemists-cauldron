@@ -78,7 +78,6 @@ export function selectParameterBars(
     const shelfCatalog = catalog.slice(0, DIFFICULTY_RULES[state.difficulty].shelfSize);
 
     return {
-        recipeName: state.activeRecipe?.name,
         bars: buildBars(
             calculateCauldron(ingredients),
             state.activeRecipe?.targets,

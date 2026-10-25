@@ -1,0 +1,233 @@
+.cauldron__burst {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    color: var(--brew-color, var(--color-alchemy));
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -2% -8% 38%;
+        background: radial-gradient(ellipse, currentcolor, transparent 65%);
+        opacity: 0;
+    }
+}
+
+.cauldron__burst-ring {
+    position: absolute;
+    inset-block-start: 15%;
+    inset-inline-start: 50%;
+    inline-size: 85%;
+    block-size: 28%;
+    border: var(--border-width-medium) solid currentcolor;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateX(-50%);
+}
+
+.cauldron__spark {
+    --spark-x: -4.5rem;
+    --spark-y: -2rem;
+
+    position: absolute;
+    inset-block-start: 27%;
+    inset-inline-start: 50%;
+    inline-size: 0.3rem;
+    aspect-ratio: 1;
+    background: currentcolor;
+    border-radius: 50%;
+    box-shadow: 0 0 var(--size-1) currentcolor;
+    opacity: 0;
+
+    &:nth-child(3) {
+        --spark-x: -3rem;
+        --spark-y: -4rem;
+    }
+
+    &:nth-child(4) {
+        --spark-x: -1rem;
+        --spark-y: -5rem;
+    }
+
+    &:nth-child(5) {
+        --spark-x: 1.5rem;
+        --spark-y: -4.5rem;
+    }
+
+    &:nth-child(6) {
+        --spark-x: 3rem;
+        --spark-y: -3.5rem;
+    }
+
+    &:nth-child(7) {
+        --spark-x: 4.5rem;
+        --spark-y: -1.5rem;
+    }
+}
+
+.cauldron__pot::after,
+.cauldron__liquid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0, var(--brew-color), transparent 75%);
+    border-radius: inherit;
+    opacity: 0;
+}
+
+.cauldron__vessel--success {
+    --brew-color: var(--color-alchemy);
+
+    animation: cauldron-success 720ms ease-out;
+
+    .cauldron__rune {
+        stroke: var(--color-gold-light);
+    }
+}
+
+.cauldron__vessel--failure {
+    --brew-color: var(--color-danger);
+
+    animation: cauldron-failure 560ms ease-out;
+
+    .cauldron__rune {
+        stroke: var(--color-danger);
+    }
+}
+
+.cauldron__vessel--success,
+.cauldron__vessel--failure {
+    .cauldron__pot::after,
+    .cauldron__liquid::after {
+        animation: cauldron-flash 500ms ease-out;
+    }
+
+    .cauldron__burst::before {
+        animation: cauldron-burst 500ms ease-out;
+    }
+
+    .cauldron__burst-ring {
+        animation: cauldron-ring 550ms ease-out;
+    }
+
+    .cauldron__spark {
+        animation: cauldron-spark 550ms ease-out;
+    }
+}
+
+@keyframes cauldron-success {
+    0%,
+    100% {
+        transform: none;
+    }
+
+    30% {
+        transform: translateY(-0.15rem) scale(1.015);
+    }
+}
+
+@keyframes cauldron-failure {
+    0%,
+    100% {
+        transform: none;
+    }
+
+    18% {
+        transform: translateY(-0.15rem) rotate(-1deg);
+    }
+
+    38% {
+        transform: rotate(0.7deg);
+    }
+
+    60% {
+        transform: rotate(-0.3deg);
+    }
+}
+
+@keyframes cauldron-flash {
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes cauldron-burst {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    20% {
+        opacity: 0.35;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-8%) scale(1.15);
+    }
+}
+
+@keyframes cauldron-ring {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.45);
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scale(1.2);
+    }
+}
+
+@keyframes cauldron-spark {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.5);
+    }
+
+    20% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--spark-x), var(--spark-y)) scale(0.3);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cauldron__vessel--success,
+    .cauldron__vessel--failure {
+        animation: cauldron-feedback-fade 350ms ease-out;
+
+        .cauldron__burst::before,
+        .cauldron__burst-ring,
+        .cauldron__spark {
+            animation: none;
+        }
+
+        .cauldron__pot::after,
+        .cauldron__liquid::after {
+            animation-duration: 350ms;
+        }
+    }
+}
+
+@keyframes cauldron-feedback-fade {
+    from {
+        opacity: 0.85;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

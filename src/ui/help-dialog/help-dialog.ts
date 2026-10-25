@@ -1,5 +1,6 @@
 import { DIFFICULTY_LABELS, DIFFICULTY_RULES } from '@/data/difficulty';
 import { MAX_STOCK, MIN_STOCK } from '@/logic/create-stock';
+import { POUR_OUT_COST_SECONDS } from '@/logic/pour-out';
 import type { Difficulty } from '@/types/difficulty';
 import { Dialog } from '@/ui/dialog/dialog';
 import { html } from '@/utils/html';
@@ -40,9 +41,14 @@ export class HelpDialog extends Dialog {
                     fixed for the run.
                 </li>
                 <li>
-                    Click ingredients to add them to the cauldron. The shelf has ${rules.shelfSize}
-                    ingredient types, each with ${MIN_STOCK}–${MAX_STOCK} portions. The cauldron
-                    holds up to ${rules.maxCauldronSize} portions.
+                    Click ingredients or drag them into the cauldron. The shelf has
+                    ${rules.shelfSize} ingredient types, each with ${MIN_STOCK}–${MAX_STOCK}
+                    portions. The cauldron holds up to ${rules.maxCauldronSize} portions.
+                </li>
+                <li>
+                    Available cards can be dragged with a mouse. Drop one onto the highlighted
+                    cauldron to add one portion. Cancelling a drag spends nothing; on touch screens,
+                    tap a card to add it.
                 </li>
                 <li>
                     Temperature, Density and Magic Power are the sums of the added ingredient
@@ -57,11 +63,33 @@ export class HelpDialog extends Dialog {
                 <li>
                     Every brew clears the cauldron. Spent ingredients never return to the shelf.
                 </li>
+                <li>
+                    Pour Out clears a non-empty cauldron for ${POUR_OUT_COST_SECONDS} seconds
+                    without losing a life. Ingredients are spent and the recipe stays the same. The
+                    run ends if time or supplies run out.
+                </li>
             </ol>
             <h3>Pause and resume</h3>
             <p>
                 Pause stops the clock and hides the field. Hiding the browser tab also pauses the
                 game. Resume continues the same mixture; Exit to Menu discards the run.
+            </p>
+            <h3>Keyboard controls</h3>
+            <ul class="help-dialog__shortcuts">
+                <li>
+                    <kbd>1</kbd>–<kbd>${rules.shelfSize}</kbd> — add an ingredient in shelf order.
+                    Empty slots keep their number.
+                </li>
+                <li><kbd>B</kbd> — Brew. <kbd>X</kbd> — Pour Out.</li>
+                <li><kbd>P</kbd> or <kbd>Esc</kbd> — pause during play.</li>
+                <li>
+                    <kbd>Tab</kbd> moves focus; <kbd>Enter</kbd> or <kbd>Space</kbd> presses the
+                    focused button. On pause, use Resume or close the dialog with <kbd>Esc</kbd>.
+                </li>
+            </ul>
+            <p>
+                Game shortcuts work only during play and are ignored while typing. Letter keys use
+                their physical positions, so they also work with another keyboard layout.
             </p>
             <h3>Save and continue</h3>
             <p>

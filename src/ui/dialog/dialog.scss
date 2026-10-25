@@ -18,8 +18,6 @@
     border: var(--border-width-medium) solid var(--color-gold);
     border-radius: var(--corner-large);
     box-shadow: 0 var(--size-2) var(--size-8) var(--color-bg);
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border) transparent;
     opacity: 0;
     transform: translateY(var(--size-1-5)) scale(0.98);
     transition:

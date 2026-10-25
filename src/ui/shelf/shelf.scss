@@ -26,15 +26,21 @@
 }
 
 .shelf__list {
+    --scrollbar-size: var(--size-1-5);
+    --scrollbar-width: auto;
+
     display: flex;
     flex-direction: column;
+    max-block-size: 28.6875rem;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-// A wooden plank under every row, like the shelf in the reference.
 .shelf__item {
+    flex-shrink: 0;
     padding-block: var(--size-05);
     border-block-end: var(--border-width-thick) solid
         color-mix(in srgb, var(--color-border) 55%, black);

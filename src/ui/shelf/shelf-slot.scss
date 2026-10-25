@@ -21,6 +21,15 @@
         border-color var(--transition-fast),
         opacity var(--transition-base);
 
+    &[draggable='true'] {
+        cursor: grab;
+        user-select: none;
+    }
+
+    &--dragging {
+        opacity: 0.55;
+    }
+
     &:hover:not(:disabled) {
         background: var(--color-surface-raised);
         border-color: var(--color-border);
@@ -43,6 +52,14 @@
         grid-template-areas:
             'icon name stock'
             'icon stats stats';
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        grid-template-areas: 'icon name stock';
+
+        .shelf-slot__stats {
+            display: none;
+        }
     }
 }
 

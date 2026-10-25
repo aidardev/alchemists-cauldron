@@ -4,15 +4,12 @@ import type { RecipePanelView } from '@/types/view';
 
 export function selectRecipePanel(state: GameState): RecipePanelView {
     const ingredientCount = state.cauldronIngredientIds.length;
-    const { maxCauldronSize: capacity, tolerance } = DIFFICULTY_RULES[state.difficulty];
+    const { maxCauldronSize: capacity } = DIFFICULTY_RULES[state.difficulty];
 
     return {
         recipe: state.activeRecipe,
         ingredientCount,
         capacity,
         isFull: ingredientCount >= capacity,
-        tolerance,
-        lastBrew: state.lastBrew,
-        isGameOver: state.status === 'game-over',
     };
 }

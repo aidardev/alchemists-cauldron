@@ -15,15 +15,12 @@
         color: var(--color-text);
         background-color: var(--color-bg);
         background-image:
-            // Vignette
-            radial-gradient(ellipse at center, transparent 35%, rgb(0 0 0 / 50%) 100%),
-            // Alchemical green glow
-            radial-gradient(ellipse at 50% 45%, rgb(108 160 65 / 18%) 0%, transparent 55%),
-            // Warm ambient light
-            radial-gradient(ellipse at 12% 10%, rgb(139 95 47 / 12%) 0%, transparent 50%),
-            // Cold shadow
-            radial-gradient(ellipse at 90% 85%, rgb(36 74 79 / 18%) 0%, transparent 55%),
-            linear-gradient(180deg, #151b1b 0%, #0d1112 65%, #090c0e 100%);
+            radial-gradient(ellipse at center, transparent 40%, rgb(0 0 0 / 25%) 100%),
+            url('../assets/images/bg.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-attachment: fixed;
     }
 
     img {

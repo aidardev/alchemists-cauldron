@@ -1,5 +1,5 @@
 import type { Difficulty } from './difficulty';
-import type { BrewOutcome, GameOverReason } from './game';
+import type { BrewResult, GameOverReason } from './game';
 import type { GameSaveError } from './game-save';
 import type { Ingredient } from './ingredient';
 import type { LeaderboardEntry } from './leaderboard';
@@ -10,6 +10,7 @@ export interface ShelfSlotView {
     readonly ingredient: Ingredient;
     readonly stock: number;
     readonly disabled: boolean;
+    readonly canInspect: boolean;
 }
 
 export type ParameterStatus = 'inactive' | 'below' | 'above' | 'in-range';
@@ -29,10 +30,11 @@ export interface ParameterBarView {
 export interface CauldronView {
     readonly ingredients: readonly Ingredient[];
     readonly capacity: number;
+    readonly availableIngredientIds: readonly string[];
+    readonly lastBrew: BrewResult | undefined;
 }
 
 export interface ParameterBarsView {
-    readonly recipeName: string | undefined;
     readonly bars: readonly ParameterBarView[];
 }
 
@@ -41,15 +43,16 @@ export interface RecipePanelView {
     readonly ingredientCount: number;
     readonly capacity: number;
     readonly isFull: boolean;
-    readonly tolerance: number;
-    readonly lastBrew: BrewOutcome | undefined;
-    readonly isGameOver: boolean;
 }
 
 export interface ActionBarView {
     readonly showStart: boolean;
     readonly isRestart: boolean;
+    readonly isPaused: boolean;
     readonly canBrew: boolean;
+    readonly showPourOut: boolean;
+    readonly canPourOut: boolean;
+    readonly pourOutCost: number;
     readonly canPause: boolean;
     readonly continueGame: ContinueGameView | undefined;
     readonly saveError: GameSaveError | undefined;
@@ -84,6 +87,7 @@ export interface PauseDialogView {
 
 export interface PlayFieldView {
     readonly isPaused: boolean;
+    readonly lastBrew: BrewResult | undefined;
 }
 
 export interface SettingsView {

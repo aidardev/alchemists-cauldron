@@ -27,8 +27,6 @@ const ICONS: Readonly<Record<ParameterKey, SafeHtml>> = {
 
 export class ParameterBar extends BaseComponent<'article'> {
     private readonly valueLabel: HTMLElement;
-    private readonly targetLabel: HTMLElement;
-    private readonly statusLabel: HTMLElement;
     private readonly meter: HTMLElement;
     private readonly targetZone: HTMLElement;
     private readonly minLabel: HTMLElement;
@@ -61,15 +59,9 @@ export class ParameterBar extends BaseComponent<'article'> {
                 <span class="parameter-bar__scale-zero">0</span>
                 <span data-scale="max"></span>
             </div>
-            <div class="parameter-bar__footer">
-                <span class="parameter-bar__target-label"></span>
-                <span class="parameter-bar__status"></span>
-            </div>
         `);
 
         this.valueLabel = this.getElement('.parameter-bar__value');
-        this.targetLabel = this.getElement('.parameter-bar__target-label');
-        this.statusLabel = this.getElement('.parameter-bar__status');
         this.meter = this.getElement('.parameter-bar__meter');
         this.targetZone = this.getElement('.parameter-bar__target');
         this.minLabel = this.getElement('[data-scale="min"]');
@@ -82,8 +74,6 @@ export class ParameterBar extends BaseComponent<'article'> {
         const targetText = target ? `Target ${target.min}…${target.max}` : 'Target —';
 
         this.valueLabel.textContent = String(value);
-        this.targetLabel.textContent = targetText;
-        this.statusLabel.textContent = STATUS_LABELS[status];
         this.element.classList.toggle('parameter-bar--in-range', status === 'in-range');
         this.element.classList.toggle('parameter-bar--inactive', status === 'inactive');
         this.targetZone.hidden = !target;
