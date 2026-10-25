@@ -69,6 +69,23 @@ export class HelpDialog extends Dialog {
                 Pause stops the clock and hides the field. Hiding the browser tab also pauses the
                 game. Resume continues the same mixture; Exit to Menu discards the run.
             </p>
+            <h3>Keyboard controls</h3>
+            <ul class="help-dialog__shortcuts">
+                <li>
+                    <kbd>1</kbd>–<kbd>${rules.shelfSize}</kbd> — add an ingredient in shelf order.
+                    Empty slots keep their number.
+                </li>
+                <li><kbd>B</kbd> — Brew. <kbd>X</kbd> — Pour Out.</li>
+                <li><kbd>P</kbd> or <kbd>Esc</kbd> — pause during play.</li>
+                <li>
+                    <kbd>Tab</kbd> moves focus; <kbd>Enter</kbd> or <kbd>Space</kbd> presses the
+                    focused button. On pause, use Resume or close the dialog with <kbd>Esc</kbd>.
+                </li>
+            </ul>
+            <p>
+                Game shortcuts work only during play and are ignored while typing. Letter keys use
+                their physical positions, so they also work with another keyboard layout.
+            </p>
             <h3>Save and continue</h3>
             <p>
                 Progress is saved automatically. After reloading or reopening the page, Continue
