@@ -14,7 +14,12 @@ export function selectShelfSlots(
 
         if (stock === undefined) continue;
 
-        slots.push({ ingredient, stock, disabled: !canAddIngredient(state, ingredient.id) });
+        slots.push({
+            ingredient,
+            stock,
+            disabled: !canAddIngredient(state, ingredient.id),
+            canInspect: state.status === 'playing' && stock > 0,
+        });
     }
 
     return slots;

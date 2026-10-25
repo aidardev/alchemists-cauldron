@@ -10,6 +10,7 @@ export interface ShelfSlotView {
     readonly ingredient: Ingredient;
     readonly stock: number;
     readonly disabled: boolean;
+    readonly canInspect: boolean;
 }
 
 export type ParameterStatus = 'inactive' | 'below' | 'above' | 'in-range';
