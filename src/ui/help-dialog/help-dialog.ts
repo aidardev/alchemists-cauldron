@@ -1,5 +1,6 @@
 import { DIFFICULTY_LABELS, DIFFICULTY_RULES } from '@/data/difficulty';
 import { MAX_STOCK, MIN_STOCK } from '@/logic/create-stock';
+import { POUR_OUT_COST_SECONDS } from '@/logic/pour-out';
 import type { Difficulty } from '@/types/difficulty';
 import { Dialog } from '@/ui/dialog/dialog';
 import { html } from '@/utils/html';
@@ -56,6 +57,11 @@ export class HelpDialog extends Dialog {
                 </li>
                 <li>
                     Every brew clears the cauldron. Spent ingredients never return to the shelf.
+                </li>
+                <li>
+                    Pour Out clears a non-empty cauldron for ${POUR_OUT_COST_SECONDS} seconds
+                    without losing a life. Ingredients are spent and the recipe stays the same. The
+                    run ends if time or supplies run out.
                 </li>
             </ol>
             <h3>Pause and resume</h3>

@@ -49,6 +49,9 @@ export interface ActionBarView {
     readonly isRestart: boolean;
     readonly isPaused: boolean;
     readonly canBrew: boolean;
+    readonly showPourOut: boolean;
+    readonly canPourOut: boolean;
+    readonly pourOutCost: number;
     readonly canPause: boolean;
     readonly continueGame: ContinueGameView | undefined;
     readonly saveError: GameSaveError | undefined;

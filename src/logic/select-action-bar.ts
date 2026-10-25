@@ -2,6 +2,8 @@ import type { GameState } from '@/types/game';
 import type { GameSave, GameSaveError } from '@/types/game-save';
 import type { ActionBarView } from '@/types/view';
 import { canBrew } from './can-brew';
+import { canPourOut } from './can-pour-out';
+import { POUR_OUT_COST_SECONDS } from './pour-out';
 
 export function selectActionBar(
     state: GameState,
@@ -13,6 +15,9 @@ export function selectActionBar(
         isRestart: state.status === 'game-over',
         isPaused: state.status === 'paused',
         canBrew: canBrew(state),
+        showPourOut: state.status === 'playing',
+        canPourOut: canPourOut(state),
+        pourOutCost: POUR_OUT_COST_SECONDS,
         canPause: state.status === 'playing',
         saveError,
         continueGame:
