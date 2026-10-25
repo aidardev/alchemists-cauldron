@@ -1,10 +1,11 @@
 import { BaseComponent } from '@/core/base-component';
 import type { CauldronView } from '@/types/view';
-import { html, type SafeHtml } from '@/utils/html';
+import { html } from '@/utils/html';
 import { ingredientIcon } from '../ingredient-icon/ingredient-icon';
 
 export class CauldronContents extends BaseComponent<'ol'> {
-    private renderedCount = 0;
+    private readonly items: HTMLLIElement[] = [];
+    private readonly ingredientIds: (string | undefined)[] = [];
 
     constructor() {
         super('ol', 'cauldron__contents');
@@ -14,30 +15,26 @@ export class CauldronContents extends BaseComponent<'ol'> {
 
     public render({ ingredients, capacity }: CauldronView): void {
         const length = Math.max(capacity, ingredients.length);
-        const items: SafeHtml[] = [];
+        while (this.items.length > length) {
+            this.items.pop()?.remove();
+            this.ingredientIds.pop();
+        }
 
         for (let index = 0; index < length; index += 1) {
             const ingredient = ingredients[index];
-
-            items.push(
-                ingredient
-                    ? html`
-                          <li
-                              class="cauldron__item ${
-                                  index >= this.renderedCount ? 'cauldron__item--new' : ''
-                              }"
-                          >
-                              ${ingredientIcon(ingredient.id)}<span>${ingredient.name}</span>
-                          </li>
-                      `
-                    : html`<li
-                          class="cauldron__item cauldron__item--empty"
-                          aria-hidden="true"
-                      ></li>`,
-            );
+            let item = this.items[index];
+            if (item && this.ingredientIds[index] === ingredient?.id) continue;
+            if (!item) {
+                item = document.createElement('li');
+                this.items.push(item);
+                this.element.append(item);
+            }
+            this.ingredientIds[index] = ingredient?.id;
+            item.className = `cauldron__item cauldron__item--${ingredient ? 'new' : 'empty'}`;
+            item.setAttribute('aria-hidden', String(!ingredient));
+            item.innerHTML = ingredient
+                ? html`${ingredientIcon(ingredient.id)}<span>${ingredient.name}</span>`.value
+                : '';
         }
-
-        this.renderedCount = ingredients.length;
-        this.setHtml(html`${items}`);
     }
 }

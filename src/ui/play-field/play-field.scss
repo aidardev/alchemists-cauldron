@@ -37,7 +37,12 @@
         pointer-events: none;
     }
 
-    &--paused * {
+    &--failure {
+        animation: play-field-shake 280ms ease-out;
+    }
+
+    &.play-field--paused,
+    &.play-field--paused * {
         animation-play-state: paused;
     }
 
@@ -60,5 +65,34 @@
         grid-template-columns: 24rem minmax(0, 1fr) minmax(22rem, 24rem);
         grid-template-rows: auto 1fr auto;
         row-gap: var(--size-3);
+    }
+}
+
+@keyframes play-field-shake {
+    0%,
+    100% {
+        transform: none;
+    }
+
+    20% {
+        transform: translate(-3px, 1px);
+    }
+
+    40% {
+        transform: translate(2px, -1px);
+    }
+
+    60% {
+        transform: translate(-1px, 1px);
+    }
+
+    80% {
+        transform: translate(1px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .play-field--failure {
+        animation: none;
     }
 }

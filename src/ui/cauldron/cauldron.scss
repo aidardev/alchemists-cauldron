@@ -22,6 +22,81 @@
     position: relative;
     inline-size: min(100%, 26rem);
     aspect-ratio: 5 / 4;
+    pointer-events: none;
+    transform-origin: 50% 85%;
+}
+
+.cauldron__ingredients {
+    --icon-size: 100%;
+
+    position: absolute;
+    z-index: 1;
+    inset: 16% 2% auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    block-size: 28%;
+    overflow: hidden;
+    padding-inline: 8%;
+    border-radius: 50%;
+}
+
+.cauldron__floating-ingredient {
+    position: relative;
+    display: block;
+    flex: 0 1 17%;
+    max-inline-size: 3.75rem;
+    aspect-ratio: 1;
+    animation: cauldron-ingredient-float 3.8s ease-in-out infinite;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: auto 15% 0;
+        block-size: 12%;
+        background: color-mix(in srgb, var(--liquid-deep) 35%, transparent);
+        border: var(--border-width-thin) solid rgb(255 255 255 / 25%);
+        border-radius: 50%;
+    }
+
+    > .ingredient-icon {
+        position: relative;
+        display: block;
+        animation: cauldron-item-in var(--duration-base) ease-out;
+    }
+
+    .ingredient-icon__glass {
+        fill: color-mix(in srgb, var(--color-bg) 30%, transparent);
+        stroke: color-mix(in srgb, currentcolor 65%, var(--color-bg));
+    }
+
+    .ingredient-icon__liquid {
+        opacity: 1;
+    }
+
+    &:nth-child(2) {
+        margin-block-start: -0.4rem;
+        animation-duration: 4.4s;
+        animation-delay: -1.5s;
+    }
+
+    &:nth-child(3) {
+        margin-block-start: 0.3rem;
+        animation-duration: 4s;
+        animation-delay: -2.5s;
+    }
+
+    &:nth-child(4) {
+        margin-block-start: -0.2rem;
+        animation-duration: 4.8s;
+        animation-delay: -0.8s;
+    }
+
+    &:nth-child(5) {
+        margin-block-start: 0.2rem;
+        animation-duration: 4.2s;
+        animation-delay: -3s;
+    }
 }
 
 .cauldron__glow {
@@ -58,12 +133,10 @@
     filter: drop-shadow(0 0 var(--size-1) var(--color-alchemy));
 }
 
-// The opening of the pot: an ellipse of glowing liquid with an iron rim.
 .cauldron__liquid {
     position: absolute;
     inset: 15% 0 auto;
     block-size: 30%;
-    overflow: hidden;
     background: radial-gradient(
         ellipse at 50% 40%,
         var(--liquid-light) 0%,
@@ -107,6 +180,7 @@
     inset: -8% 20% 38%;
     display: flex;
     justify-content: space-around;
+    pointer-events: none;
 
     span {
         inline-size: 28%;
@@ -241,11 +315,24 @@
     }
 }
 
+@keyframes cauldron-ingredient-float {
+    0%,
+    100% {
+        transform: translate(0, 0.1rem) rotate(-6deg);
+    }
+
+    50% {
+        transform: translate(0.15rem, -0.25rem) rotate(6deg);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .cauldron__glow,
     .cauldron__liquid span,
     .cauldron__steam span,
-    .cauldron__item--new {
+    .cauldron__item--new,
+    .cauldron__floating-ingredient,
+    .cauldron__floating-ingredient > .ingredient-icon {
         animation: none;
     }
 }

@@ -1,8 +1,11 @@
 import { BaseComponent } from '@/core/base-component';
 import type { CauldronView } from '@/types/view';
+import { BrewFeedback } from '@/ui/brew-feedback';
+import { INGREDIENT_DRAG_TYPE } from '@/ui/ingredient-drag';
 import { html } from '@/utils/html';
-import { INGREDIENT_DRAG_TYPE } from '../ingredient-drag';
 import { CauldronContents } from './cauldron-contents';
+import './cauldron-feedback.scss';
+import { CauldronIngredients } from './cauldron-ingredients';
 import './cauldron.scss';
 
 interface CauldronOptions {
@@ -11,6 +14,8 @@ interface CauldronOptions {
 
 export class Cauldron extends BaseComponent<'section'> {
     private readonly contents: CauldronContents;
+    private readonly ingredients: CauldronIngredients;
+    private readonly feedback: BrewFeedback;
     private readonly onAdd: CauldronOptions['onAdd'];
     private availableIngredientIds = new Set<string>();
 
@@ -68,9 +73,23 @@ export class Cauldron extends BaseComponent<'section'> {
                     </svg>
                 </div>
                 <div class="cauldron__liquid"><span></span><span></span><span></span></div>
+                <div class="cauldron__burst">
+                    <span class="cauldron__burst-ring"></span>
+                    <span class="cauldron__spark"></span><span class="cauldron__spark"></span>
+                    <span class="cauldron__spark"></span><span class="cauldron__spark"></span>
+                    <span class="cauldron__spark"></span><span class="cauldron__spark"></span>
+                </div>
             </div>
         `);
 
+        const vessel = this.getElement('.cauldron__vessel');
+        this.ingredients = this.adopt(new CauldronIngredients());
+        vessel.append(this.ingredients.element);
+        this.feedback = new BrewFeedback(
+            vessel,
+            { success: 'cauldron__vessel--success', failure: 'cauldron__vessel--failure' },
+            this.eventSignal,
+        );
         this.contents = this.adopt(new CauldronContents());
         this.element.append(this.contents.element);
 
@@ -93,5 +112,7 @@ export class Cauldron extends BaseComponent<'section'> {
         this.availableIngredientIds = new Set(view.availableIngredientIds);
         if (this.availableIngredientIds.size === 0) this.clearDragHighlight();
         this.contents.render(view);
+        this.ingredients.render(view.ingredients);
+        this.feedback.render(view.lastBrew);
     }
 }

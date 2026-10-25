@@ -13,6 +13,7 @@ A browser puzzle game: mix ingredients to match a potion's Temperature, Density 
 - Automatic saving and continuation through `localStorage`, saved-data validation and storage error handling.
 - Pour Out clears a mixture for 10 seconds without losing a life or returning ingredients.
 - Mouse drag and drop from the shelf into the cauldron, with valid drop-target highlighting.
+- Floating ingredient icons inside the cauldron, a green pulse on success, and a local explosion with a short field shake on failure. Effects use CSS animations, pause with the game and respect reduced-motion preferences.
 - Responsive mobile and desktop layout with reduced-motion support.
 
 ## How to play

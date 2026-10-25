@@ -11,7 +11,5 @@ export function selectRecipePanel(state: GameState): RecipePanelView {
         ingredientCount,
         capacity,
         isFull: ingredientCount >= capacity,
-        lastBrew: state.lastBrew,
-        isGameOver: state.status === 'game-over',
     };
 }
