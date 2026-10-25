@@ -1,15 +1,59 @@
 import { BaseComponent } from '@/core/base-component';
 import type { CauldronView } from '@/types/view';
 import { html } from '@/utils/html';
+import { INGREDIENT_DRAG_TYPE } from '../ingredient-drag';
 import { CauldronContents } from './cauldron-contents';
 import './cauldron.scss';
 
+interface CauldronOptions {
+    readonly onAdd: (ingredientId: string) => void;
+}
+
 export class Cauldron extends BaseComponent<'section'> {
     private readonly contents: CauldronContents;
+    private readonly onAdd: CauldronOptions['onAdd'];
+    private availableIngredientIds = new Set<string>();
 
-    constructor() {
+    private handleDragOver = (event: DragEvent): void => {
+        const transfer = event.dataTransfer;
+        if (
+            !transfer?.types.includes(INGREDIENT_DRAG_TYPE) ||
+            this.availableIngredientIds.size === 0
+        ) {
+            if (transfer) transfer.dropEffect = 'none';
+            this.clearDragHighlight();
+            return;
+        }
+
+        event.preventDefault();
+        transfer.dropEffect = 'copy';
+        this.element.classList.add('cauldron--drag-over');
+    };
+
+    private handleDragLeave = (event: DragEvent): void => {
+        const nextTarget = event.relatedTarget;
+        if (nextTarget instanceof Node && this.element.contains(nextTarget)) return;
+        this.clearDragHighlight();
+    };
+
+    private handleDrop = (event: DragEvent): void => {
+        event.preventDefault();
+        this.clearDragHighlight();
+
+        const transfer = event.dataTransfer;
+        if (!transfer?.types.includes(INGREDIENT_DRAG_TYPE)) return;
+        const ingredientId = transfer.getData(INGREDIENT_DRAG_TYPE);
+        if (this.availableIngredientIds.has(ingredientId)) this.onAdd(ingredientId);
+    };
+
+    private clearDragHighlight = (): void => {
+        this.element.classList.remove('cauldron--drag-over');
+    };
+
+    constructor({ onAdd }: CauldronOptions) {
         super('section', 'cauldron');
 
+        this.onAdd = onAdd;
         this.element.setAttribute('aria-label', 'Cauldron');
 
         this.setHtml(html`
@@ -29,9 +73,25 @@ export class Cauldron extends BaseComponent<'section'> {
 
         this.contents = this.adopt(new CauldronContents());
         this.element.append(this.contents.element);
+
+        this.element.addEventListener('dragenter', this.handleDragOver, {
+            signal: this.eventSignal,
+        });
+        this.element.addEventListener('dragover', this.handleDragOver, {
+            signal: this.eventSignal,
+        });
+        this.element.addEventListener('dragleave', this.handleDragLeave, {
+            signal: this.eventSignal,
+        });
+        this.element.addEventListener('drop', this.handleDrop, { signal: this.eventSignal });
+        this.element.ownerDocument.addEventListener('dragend', this.clearDragHighlight, {
+            signal: this.eventSignal,
+        });
     }
 
     public render(view: CauldronView): void {
+        this.availableIngredientIds = new Set(view.availableIngredientIds);
+        if (this.availableIngredientIds.size === 0) this.clearDragHighlight();
         this.contents.render(view);
     }
 }

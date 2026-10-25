@@ -3,6 +3,7 @@ import type { Ingredient } from '@/types/ingredient';
 import type { ShelfSlotView } from '@/types/view';
 import { formatSigned } from '@/utils/format-signed';
 import { html, SafeHtml } from '@/utils/html';
+import { INGREDIENT_DRAG_TYPE } from '../ingredient-drag';
 import { ingredientIcon } from '../ingredient-icon/ingredient-icon';
 import './shelf-slot.scss';
 
@@ -16,6 +17,21 @@ export class ShelfSlot extends BaseComponent<'button'> {
     private readonly icon: HTMLElement;
     private readonly ingredient: Ingredient;
     private readonly stockBadge: HTMLElement;
+
+    private handleDragStart = (event: DragEvent): void => {
+        if (this.element.disabled || !this.element.draggable || !event.dataTransfer) {
+            event.preventDefault();
+            return;
+        }
+
+        event.dataTransfer.setData(INGREDIENT_DRAG_TYPE, this.ingredient.id);
+        event.dataTransfer.effectAllowed = 'copy';
+        this.element.classList.add('shelf-slot--dragging');
+    };
+
+    private handleDragEnd = (): void => {
+        this.element.classList.remove('shelf-slot--dragging');
+    };
 
     constructor(ingredient: Ingredient, onSelect: (ingredientId: string) => void) {
         super('button', 'shelf-slot');
@@ -40,6 +56,12 @@ export class ShelfSlot extends BaseComponent<'button'> {
         this.element.addEventListener('click', () => onSelect(ingredient.id), {
             signal: this.eventSignal,
         });
+        this.element.addEventListener('dragstart', this.handleDragStart, {
+            signal: this.eventSignal,
+        });
+        this.element.addEventListener('dragend', this.handleDragEnd, {
+            signal: this.eventSignal,
+        });
     }
 
     private describe(stock: number): string {
@@ -53,6 +75,8 @@ export class ShelfSlot extends BaseComponent<'button'> {
 
         this.stockBadge.textContent = String(stock);
         this.element.disabled = disabled;
+        this.element.draggable = !disabled;
+        if (disabled) this.handleDragEnd();
         this.element.classList.toggle('shelf-slot--empty', isEmpty);
         this.icon.hidden = isEmpty;
         this.element.setAttribute('aria-label', this.describe(stock));

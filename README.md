@@ -12,13 +12,13 @@ A browser puzzle game: mix ingredients to match a potion's Temperature, Density 
 - A local Top-10 leaderboard per difficulty, with name validation and confirmation before clearing results.
 - Automatic saving and continuation through `localStorage`, saved-data validation and storage error handling.
 - Pour Out clears a mixture for 10 seconds without losing a life or returning ingredients.
-- Keyboard shortcuts for ingredients, brewing, pouring out and pausing during active play.
+- Mouse drag and drop from the shelf into the cauldron, with valid drop-target highlighting.
 - Responsive mobile and desktop layout with reduced-motion support.
 
 ## How to play
 
 1. Choose a difficulty in **Settings** (gear icon), then click **Start game**. Medium is the default. Difficulty is fixed for the run.
-2. Click ingredient cards to add portions. Cards show parameter values and remaining stock; each ingredient starts with 2–15 portions. The shelf locks when the cauldron is full.
+2. Click ingredient cards or drag them into the cauldron to add portions. Cards show parameter values and remaining stock; each ingredient starts with 2–15 portions. The shelf locks when the cauldron is full. Each successful drop spends one portion; cancelling a drag spends nothing. On touch screens, tap the cards.
 3. Match all three recipe ranges using the parameter bars. Values are ingredient sums; brewing allows the selected difficulty's tolerance on each side of each range.
 4. Click **Brew** with at least one ingredient. Success awards points, adds time and draws a new recipe. Failure costs one life and keeps the recipe. Every brew empties the cauldron; ingredients are spent permanently. Time bonuses are capped at the starting duration.
 5. Use **Pour Out −10 s** to discard a non-empty mixture without losing a life. The recipe and score stay the same; spent ingredients do not return. The action can end the run if time or supplies run out.
