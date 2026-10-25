@@ -47,19 +47,27 @@ export class ActionBar extends BaseComponent<'div'> {
                 type="button"
                 class="action-bar__button action-bar__button--secondary"
                 data-action="pour-out"
+                aria-keyshortcuts="X"
                 hidden
                 disabled
             >
                 Pour Out
                 <span class="action-bar__cost" aria-hidden="true"></span>
             </button>
-            <button type="button" class="action-bar__button" data-action="brew" disabled>
+            <button
+                type="button"
+                class="action-bar__button"
+                data-action="brew"
+                aria-keyshortcuts="B"
+                disabled
+            >
                 Brew
             </button>
             <button
                 type="button"
                 class="action-bar__button action-bar__button--secondary"
                 data-action="pause"
+                aria-keyshortcuts="P Escape"
                 aria-haspopup="dialog"
                 aria-controls="pause-dialog"
                 hidden
