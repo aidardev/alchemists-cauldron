@@ -29,6 +29,7 @@ export interface ParameterBarView {
 export interface CauldronView {
     readonly ingredients: readonly Ingredient[];
     readonly capacity: number;
+    readonly availableIngredientIds: readonly string[];
 }
 
 export interface ParameterBarsView {

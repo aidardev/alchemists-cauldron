@@ -39,7 +39,7 @@ export class App extends BaseComponent<'main'> {
 
         const header = this.adopt(new Header());
         const shelf = this.adopt(new Shelf({ onAdd: (id) => store.addIngredient(id) }));
-        const cauldron = this.adopt(new Cauldron());
+        const cauldron = this.adopt(new Cauldron({ onAdd: (id) => store.addIngredient(id) }));
         const parameterBars = this.adopt(new ParameterBars());
         const recipePanel = this.adopt(new RecipePanel());
         const gameResults = new GameResultsController(store);
